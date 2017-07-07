@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13122.17" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BV1-FR-VrT">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13104.14"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="tXr-a1-R10">
+            <objects>
+                <viewController id="BV1-FR-VrT" customClass="ViewController" customModule="ARuler" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="E3o-43-WKG"/>
+                        <viewControllerLayoutGuide type="bottom" id="BsP-LT-0SZ"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="hG4-f3-ROa">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <arscnView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UjI-29-B53">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                            </arscnView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="green" translatesAutoresizingMaskIntoConstraints="NO" id="eMZ-d9-cLU">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                            </imageView>
+                            <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MtD-xF-1bP">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="64"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="Iwr-yT-jBK">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="64"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GEg-bp-H3v">
+                                            <rect key="frame" x="166" y="31.5" width="42" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="GEg-bp-H3v" firstAttribute="centerX" secondItem="Iwr-yT-jBK" secondAttribute="centerX" id="FJV-MF-2SP"/>
+                                        <constraint firstItem="GEg-bp-H3v" firstAttribute="centerY" secondItem="Iwr-yT-jBK" secondAttribute="centerY" constant="10" id="VTl-ZU-Wpx"/>
+                                    </constraints>
+                                </view>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="64" id="Jww-0D-GsS"/>
+                                </constraints>
+                                <blurEffect style="light"/>
+                            </visualEffectView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c8J-K7-OFh">
+                                <rect key="frame" x="163" y="539" width="48" height="48"/>
+                                <state key="normal" image="add"/>
+                                <state key="selected" image="set"/>
+                                <connections>
+                                    <action selector="placeAction:" destination="BV1-FR-VrT" eventType="touchUpInside" id="Weo-h1-VuV"/>
+                                </connections>
+                            </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Slice" translatesAutoresizingMaskIntoConstraints="NO" id="Mba-f0-50h">
+                                <rect key="frame" x="167.5" y="313.5" width="40" height="40"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AiG-RV-qJd">
+                                <rect key="frame" x="325" y="617" width="40" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="Ox5-WD-WeR"/>
+                                    <constraint firstAttribute="width" constant="40" id="W9z-x1-7ph"/>
+                                </constraints>
+                                <state key="normal" image="restart"/>
+                                <connections>
+                                    <action selector="restartAction:" destination="BV1-FR-VrT" eventType="touchUpInside" id="Qmn-Ky-x5A"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Mba-f0-50h" firstAttribute="centerY" secondItem="hG4-f3-ROa" secondAttribute="centerY" id="1S7-ak-13y"/>
+                            <constraint firstItem="eMZ-d9-cLU" firstAttribute="top" secondItem="UjI-29-B53" secondAttribute="top" id="2NZ-rQ-8hY"/>
+                            <constraint firstItem="Mba-f0-50h" firstAttribute="centerX" secondItem="hG4-f3-ROa" secondAttribute="centerX" id="42K-8I-yRU"/>
+                            <constraint firstItem="c8J-K7-OFh" firstAttribute="centerX" secondItem="hG4-f3-ROa" secondAttribute="centerX" id="5Xz-uE-zwK"/>
+                            <constraint firstItem="MtD-xF-1bP" firstAttribute="leading" secondItem="hG4-f3-ROa" secondAttribute="leading" id="5pg-Sw-W8G"/>
+                            <constraint firstAttribute="trailing" secondItem="UjI-29-B53" secondAttribute="trailing" id="97i-Vc-uSI"/>
+                            <constraint firstItem="BsP-LT-0SZ" firstAttribute="top" secondItem="AiG-RV-qJd" secondAttribute="bottom" constant="10" id="C5m-a6-fxF"/>
+                            <constraint firstItem="BsP-LT-0SZ" firstAttribute="top" secondItem="c8J-K7-OFh" secondAttribute="bottom" constant="80" id="HDb-RR-9EQ"/>
+                            <constraint firstAttribute="trailing" secondItem="AiG-RV-qJd" secondAttribute="trailing" constant="10" id="JZr-RZ-mZN"/>
+                            <constraint firstItem="UjI-29-B53" firstAttribute="top" secondItem="hG4-f3-ROa" secondAttribute="top" id="QoH-ci-NOw"/>
+                            <constraint firstItem="BsP-LT-0SZ" firstAttribute="top" secondItem="eMZ-d9-cLU" secondAttribute="bottom" id="ZGN-FI-FQ8"/>
+                            <constraint firstAttribute="trailing" secondItem="MtD-xF-1bP" secondAttribute="trailing" id="diS-f6-KIA"/>
+                            <constraint firstItem="eMZ-d9-cLU" firstAttribute="leading" secondItem="hG4-f3-ROa" secondAttribute="leading" id="fR4-5C-Pv7"/>
+                            <constraint firstItem="UjI-29-B53" firstAttribute="leading" secondItem="hG4-f3-ROa" secondAttribute="leading" id="l7s-9f-q4Y"/>
+                            <constraint firstItem="MtD-xF-1bP" firstAttribute="top" secondItem="hG4-f3-ROa" secondAttribute="top" id="rda-jH-We9"/>
+                            <constraint firstAttribute="trailing" secondItem="eMZ-d9-cLU" secondAttribute="trailing" id="xAc-Zl-qes"/>
+                            <constraint firstItem="BsP-LT-0SZ" firstAttribute="top" secondItem="UjI-29-B53" secondAttribute="bottom" id="yyi-Ue-9uW"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="distanceLabel" destination="GEg-bp-H3v" id="8uI-l3-vhU"/>
+                        <outlet property="indicator" destination="Mba-f0-50h" id="m8s-zz-Xge"/>
+                        <outlet property="placeButton" destination="c8J-K7-OFh" id="CUs-S6-wn1"/>
+                        <outlet property="sceneView" destination="UjI-29-B53" id="HDI-MH-4Kb"/>
+                        <outlet property="stateView" destination="eMZ-d9-cLU" id="0kT-Na-Beg"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="SZV-WD-TEh" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="24.800000000000001" y="36.431784107946029"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="Slice" width="40" height="40"/>
+        <image name="add" width="48" height="48"/>
+        <image name="green" width="20" height="20"/>
+        <image name="restart" width="20" height="23"/>
+        <image name="set" width="48" height="48"/>
+    </resources>
+</document>
