@@ -71,6 +71,13 @@
                                     <action selector="restartAction:" destination="BV1-FR-VrT" eventType="touchUpInside" id="Qmn-Ky-x5A"/>
                                 </connections>
                             </button>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KpI-ZY-u0P">
+                                <rect key="frame" x="10" y="609" width="41" height="48"/>
+                                <state key="normal" image="settings"/>
+                                <connections>
+                                    <action selector="debugAction:" destination="BV1-FR-VrT" eventType="touchUpInside" id="YIX-BO-hfh"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -89,11 +96,14 @@
                             <constraint firstItem="eMZ-d9-cLU" firstAttribute="leading" secondItem="hG4-f3-ROa" secondAttribute="leading" id="fR4-5C-Pv7"/>
                             <constraint firstItem="UjI-29-B53" firstAttribute="leading" secondItem="hG4-f3-ROa" secondAttribute="leading" id="l7s-9f-q4Y"/>
                             <constraint firstItem="MtD-xF-1bP" firstAttribute="top" secondItem="hG4-f3-ROa" secondAttribute="top" id="rda-jH-We9"/>
+                            <constraint firstItem="KpI-ZY-u0P" firstAttribute="leading" secondItem="hG4-f3-ROa" secondAttribute="leading" constant="10" id="vAL-nv-6NY"/>
                             <constraint firstAttribute="trailing" secondItem="eMZ-d9-cLU" secondAttribute="trailing" id="xAc-Zl-qes"/>
+                            <constraint firstItem="BsP-LT-0SZ" firstAttribute="top" secondItem="KpI-ZY-u0P" secondAttribute="bottom" constant="10" id="xUJ-9R-xdr"/>
                             <constraint firstItem="BsP-LT-0SZ" firstAttribute="top" secondItem="UjI-29-B53" secondAttribute="bottom" id="yyi-Ue-9uW"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="debugButton" destination="KpI-ZY-u0P" id="43s-Np-fog"/>
                         <outlet property="distanceLabel" destination="GEg-bp-H3v" id="8uI-l3-vhU"/>
                         <outlet property="indicator" destination="Mba-f0-50h" id="m8s-zz-Xge"/>
                         <outlet property="placeButton" destination="c8J-K7-OFh" id="CUs-S6-wn1"/>
@@ -112,5 +122,6 @@
         <image name="green" width="20" height="20"/>
         <image name="restart" width="20" height="23"/>
         <image name="set" width="48" height="48"/>
+        <image name="settings" width="41" height="48"/>
     </resources>
 </document>

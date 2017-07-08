@@ -17,11 +17,14 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     @IBOutlet var stateView: UIImageView!
     @IBOutlet var placeButton: UIButton!
     @IBOutlet var distanceLabel: UILabel!
+    @IBOutlet var debugButton: UIButton!
     
     var line: LineNode?
     var lines: [LineNode] = []
     
     var textManager: TextManager!
+    
+    var showDebugVisuals: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,12 +32,12 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         // Set the view's delegate
         sceneView.delegate = self
         
-        // Show statistics such as fps and timing information
-        sceneView.showsStatistics = true
-        sceneView.debugOptions = [ARSCNDebugOptions.showFeaturePoints , ARSCNDebugOptions.showWorldOrigin]
-        
         textManager = TextManager(viewController: self)
         setupFocusSquare()
+        
+        #if DEBUG
+            debugButton.isHidden = false
+        #endif
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -55,6 +58,15 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     }
 
     @IBAction func placeAction(_ sender: UIButton) {
+        UIView.animate(withDuration: 0.2, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 0, options: [.allowUserInteraction,.curveEaseOut], animations: {
+            sender.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
+        }) { (value) in
+            UIView.animate(withDuration: 0.2, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 0, options: [.allowUserInteraction,.curveEaseIn], animations: {
+                sender.transform = CGAffineTransform.identity
+            }) { (value) in
+            }
+        }
+        sender.isSelected = !sender.isSelected;
         if line == nil {
             let startPos = worldPositionFromScreenPosition(indicator.center, objectPos: nil, infinitePlane: true)
             if let p = startPos.position {
@@ -72,21 +84,26 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         for node in lines {
             node.removeFromParent()
         }
+        restartPlaneDetection()
     }
-    // MARK: - ARSCNViewDelegate
     
-/*
-    // Override to create and configure nodes for anchors added to the view's session.
-    func renderer(_ renderer: SCNSceneRenderer, nodeFor anchor: ARAnchor) -> SCNNode? {
-        let node = SCNNode()
-     
-        return node
+    @IBAction func debugAction(_ sender: UIButton) {
+        if showDebugVisuals {
+            planes.values.forEach { $0.showDebugVisualization(showDebugVisuals) }
+            sceneView.debugOptions = [ARSCNDebugOptions.showFeaturePoints , ARSCNDebugOptions.showWorldOrigin]
+        }else{
+            planes.values.forEach { $0.showDebugVisualization(showDebugVisuals) }
+            sceneView.debugOptions = []
+        }
+        showDebugVisuals = !showDebugVisuals
     }
-*/
+    
+    // MARK: - ARSCNViewDelegate
     
     func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
         DispatchQueue.main.async {
             self.updateFocusSquare()
+            self.updateLine()
         }
     }
     
@@ -100,11 +117,6 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     
     func renderer(_ renderer: SCNSceneRenderer, didUpdate node: SCNNode, for anchor: ARAnchor) {
         DispatchQueue.main.async {
-            let startPos = self.worldPositionFromScreenPosition(self.indicator.center, objectPos: nil, infinitePlane: true)
-            if let p = startPos.position {
-                let length = self.line?.updatePosition(pos: p, camera: self.sceneView.session.currentFrame?.camera)
-                self.distanceLabel.text = length
-            }
             if let planeAnchor = anchor as? ARPlaneAnchor {
                 self.updatePlane(anchor: planeAnchor)
             }
@@ -140,6 +152,14 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     
     func sessionInterruptionEnded(_ session: ARSession) {
         // Reset tracking and/or remove existing anchors if consistent tracking is required
+    }
+    
+    func updateLine() -> Void {
+        let startPos = self.worldPositionFromScreenPosition(self.indicator.center, objectPos: nil, infinitePlane: true)
+        if let p = startPos.position {
+            let length = self.line?.updatePosition(pos: p, camera: self.sceneView.session.currentFrame?.camera)
+            self.distanceLabel.text = length
+        }
     }
     
     // MARK: - Planes

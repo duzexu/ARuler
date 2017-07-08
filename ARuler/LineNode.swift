@@ -108,7 +108,7 @@ class LineNode: NSObject {
         recentFocusSquarePositions.append(position)
         
         // remove anything older than the last 8
-        recentFocusSquarePositions.keepLast(3)
+        recentFocusSquarePositions.keepLast(8)
         
         // Correct y rotation of camera square
         if let camera = camera {
