@@ -28,23 +28,23 @@ class LineNode: NSObject {
         
         startNode = SCNNode(geometry: dot)
         startNode.scale = SCNVector3(1/400.0, 1/400.0, 1/400.0)
-        startNode.position = startPos;
+        startNode.position = startPos
         sceneView?.scene.rootNode.addChildNode(startNode)
         
         endNode = SCNNode(geometry: dot)
         endNode.scale = SCNVector3(1/400.0, 1/400.0, 1/400.0)
         
-        lineNode = nil;
+        lineNode = nil
         
         let text = SCNText (string: "--", extrusionDepth: 0.1)
         text.font = UIFont.systemFont(ofSize: 10)
-        text.firstMaterial?.diffuse.contents = UIColor.white;
-        text.alignmentMode  = kCAAlignmentCenter;
-        text.truncationMode = kCATruncationMiddle;
-        text.firstMaterial?.isDoubleSided = true;
+        text.firstMaterial?.diffuse.contents = UIColor.white
+        text.alignmentMode  = kCAAlignmentCenter
+        text.truncationMode = kCATruncationMiddle
+        text.firstMaterial?.isDoubleSided = true
         textNode = SCNNode(geometry: text)
-        textNode.scale = SCNVector3(1/500.0, 1/500.0, 1/500.0);
-        textNode.rotation = SCNVector4(1, 0, 0, -Double.pi/2.0);
+        textNode.scale = SCNVector3(1/500.0, 1/500.0, 1/500.0)
+        textNode.rotation = SCNVector4(1, 0, 0, -Double.pi/2.0)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -60,7 +60,7 @@ class LineNode: NSObject {
         endNode.position = posEnd
         
         let posStart = startNode.position
-        let middle = SCNVector3((posStart.x+posEnd.x)/2.0, (posStart.y+posEnd.y)/2.0, (posStart.z+posEnd.z)/2.0)
+        let middle = SCNVector3((posStart.x+posEnd.x)/2.0, (posStart.y+posEnd.y)/2.0+0.002, (posStart.z+posEnd.z)/2.0)
         
         let text = textNode.geometry as! SCNText
         let length = posEnd.distanceFromPos(pos: startNode.position)

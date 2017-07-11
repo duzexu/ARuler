@@ -40,7 +40,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         }
         
         #if DEBUG
-            debugButton.isHidden = false
+            debugButton.isHidden = true
         #endif
     }
     
@@ -171,15 +171,15 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         let chi = NSAttributedString(string: Float.LengthUnit.Ruler.rate.1, attributes: [NSAttributedStringKey.font:UIFont.systemFont(ofSize: 12)])
         let cm = NSAttributedString(string: Float.LengthUnit.CentiMeter.rate.1, attributes: [NSAttributedStringKey.font:UIFont.systemFont(ofSize: 15)])
         let inch = NSAttributedString(string: Float.LengthUnit.Inch.rate.1, attributes: [NSAttributedStringKey.font:UIFont.systemFont(ofSize: 12)])
-        var dis = String(format: "%.2f", arguments: [distance*Float.LengthUnit.Ruler.rate.0])
+        var dis = String(format: "%.1f", arguments: [distance*Float.LengthUnit.Ruler.rate.0])
         var result = NSMutableAttributedString(string: dis, attributes:[NSAttributedStringKey.font:UIFont.boldSystemFont(ofSize: 18)])
         result.append(chi)
         distanceLabel_Left.attributedText = result
-        dis = String(format: "%.2f", arguments: [distance*Float.LengthUnit.CentiMeter.rate.0])
+        dis = String(format: "%.1f", arguments: [distance*Float.LengthUnit.CentiMeter.rate.0])
         result = NSMutableAttributedString(string: dis, attributes:[NSAttributedStringKey.font:UIFont.boldSystemFont(ofSize: 25)])
         result.append(cm)
         distanceLabel_Center.attributedText = result
-        dis = String(format: "%.2f", arguments: [distance*Float.LengthUnit.Inch.rate.0])
+        dis = String(format: "%.1f", arguments: [distance*Float.LengthUnit.Inch.rate.0])
         result = NSMutableAttributedString(string: dis, attributes:[NSAttributedStringKey.font:UIFont.boldSystemFont(ofSize: 18)])
         result.append(inch)
         distanceLabel_Right.attributedText = result
