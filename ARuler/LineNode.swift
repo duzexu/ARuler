@@ -51,7 +51,7 @@ class LineNode: NSObject {
         fatalError("init(coder:) has not been implemented")
     }
     
-    public func updatePosition(pos: SCNVector3, camera: ARCamera?) -> String? {
+    public func updatePosition(pos: SCNVector3, camera: ARCamera?) -> Float {
         let posEnd = updateTransform(for: pos, camera: camera)
         
         if endNode.parent == nil {
@@ -63,8 +63,8 @@ class LineNode: NSObject {
         let middle = SCNVector3((posStart.x+posEnd.x)/2.0, (posStart.y+posEnd.y)/2.0, (posStart.z+posEnd.z)/2.0)
         
         let text = textNode.geometry as! SCNText
-        let length = String(format: "%.2fcm", posEnd.distanceFromPos(pos: startNode.position)*Float.LengthUnit.CentiMeter.rate)
-        text.string = length
+        let length = posEnd.distanceFromPos(pos: startNode.position)
+        text.string = String(format: "%.2fcm", length*Float.LengthUnit.CentiMeter.rate.0)
         textNode.setPivot()
         textNode.position = middle
         if textNode.parent == nil {

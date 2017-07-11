@@ -398,18 +398,18 @@ extension Float {
         case Inch //英寸
         case Ruler //尺
         
-        var rate:Float {
+        var rate:(Float,String) {
             switch self {
             case .Meter:
-                return 1.0
+                return (1.0, "m")
             case .CentiMeter:
-                return 100.0
+                return (100.0, "cm")
             case .Foot:
-                return 3.2808399
+                return (3.2808399, "ft")
             case .Inch:
-                return 39.3700787
+                return (39.3700787, "in")
             case .Ruler:
-                return 3.0
+                return (3.0, "尺")
             }
         }
         

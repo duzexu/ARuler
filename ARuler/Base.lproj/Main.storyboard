@@ -5,6 +5,7 @@
     </device>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13104.14"/>
+        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -32,16 +33,41 @@
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="64"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GEg-bp-H3v">
-                                            <rect key="frame" x="166" y="31.5" width="42" height="21"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="111" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="j1n-et-pjf" userLabel="Messages label">
+                                            <rect key="frame" x="177.5" y="33" width="20.5" height="18"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <size key="shadowOffset" width="1" height="1"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uAL-VN-G1N">
+                                            <rect key="frame" x="28" y="35.5" width="42" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <nil key="textColor"/>
+                                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GEg-bp-H3v">
+                                            <rect key="frame" x="195.5" y="35.5" width="42" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bkG-0x-Etp">
+                                            <rect key="frame" x="313" y="35.5" width="42" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="GEg-bp-H3v" firstAttribute="centerX" secondItem="Iwr-yT-jBK" secondAttribute="centerX" id="FJV-MF-2SP"/>
-                                        <constraint firstItem="GEg-bp-H3v" firstAttribute="centerY" secondItem="Iwr-yT-jBK" secondAttribute="centerY" constant="10" id="VTl-ZU-Wpx"/>
+                                        <constraint firstItem="uAL-VN-G1N" firstAttribute="trailing" secondItem="Iwr-yT-jBK" secondAttribute="leading" constant="70" id="0o0-Fq-5jE"/>
+                                        <constraint firstItem="j1n-et-pjf" firstAttribute="centerY" secondItem="Iwr-yT-jBK" secondAttribute="centerY" constant="10" id="1RM-6v-oVj"/>
+                                        <constraint firstItem="j1n-et-pjf" firstAttribute="centerX" secondItem="Iwr-yT-jBK" secondAttribute="centerX" id="EpE-4Y-qd6"/>
+                                        <constraint firstItem="GEg-bp-H3v" firstAttribute="trailing" secondItem="Iwr-yT-jBK" secondAttribute="centerX" constant="50" id="FJV-MF-2SP"/>
+                                        <constraint firstItem="bkG-0x-Etp" firstAttribute="baseline" secondItem="Iwr-yT-jBK" secondAttribute="centerY" constant="20" id="LKz-kt-Zdn"/>
+                                        <constraint firstItem="GEg-bp-H3v" firstAttribute="baseline" secondItem="Iwr-yT-jBK" secondAttribute="centerY" constant="20" id="VTl-ZU-Wpx"/>
+                                        <constraint firstItem="uAL-VN-G1N" firstAttribute="baseline" secondItem="Iwr-yT-jBK" secondAttribute="centerY" constant="20" id="WE6-O1-uL2"/>
+                                        <constraint firstAttribute="trailing" secondItem="bkG-0x-Etp" secondAttribute="trailing" constant="20" id="XW7-ht-ffB"/>
                                     </constraints>
                                 </view>
                                 <constraints>
@@ -104,8 +130,11 @@
                     </view>
                     <connections>
                         <outlet property="debugButton" destination="KpI-ZY-u0P" id="43s-Np-fog"/>
-                        <outlet property="distanceLabel" destination="GEg-bp-H3v" id="8uI-l3-vhU"/>
+                        <outlet property="distanceLabel_Center" destination="GEg-bp-H3v" id="W6n-Ek-p7q"/>
+                        <outlet property="distanceLabel_Left" destination="uAL-VN-G1N" id="Ag2-wz-SLF"/>
+                        <outlet property="distanceLabel_Right" destination="bkG-0x-Etp" id="zgg-bO-X8X"/>
                         <outlet property="indicator" destination="Mba-f0-50h" id="m8s-zz-Xge"/>
+                        <outlet property="messageLabel" destination="j1n-et-pjf" id="blG-cw-kIL"/>
                         <outlet property="placeButton" destination="c8J-K7-OFh" id="CUs-S6-wn1"/>
                         <outlet property="sceneView" destination="UjI-29-B53" id="HDI-MH-4Kb"/>
                         <outlet property="stateView" destination="eMZ-d9-cLU" id="0kT-Na-Beg"/>

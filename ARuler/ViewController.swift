@@ -16,13 +16,14 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     @IBOutlet var indicator: UIImageView!
     @IBOutlet var stateView: UIImageView!
     @IBOutlet var placeButton: UIButton!
-    @IBOutlet var distanceLabel: UILabel!
+    @IBOutlet var distanceLabel_Left: UILabel!
+    @IBOutlet var distanceLabel_Center: UILabel!
+    @IBOutlet var distanceLabel_Right: UILabel!
     @IBOutlet var debugButton: UIButton!
+    @IBOutlet var messageLabel: UILabel!
     
     var line: LineNode?
     var lines: [LineNode] = []
-    
-    var textManager: TextManager!
     
     var showDebugVisuals: Bool = false
     
@@ -32,8 +33,11 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         // Set the view's delegate
         sceneView.delegate = self
         
-        textManager = TextManager(viewController: self)
         setupFocusSquare()
+        UIView.animate(withDuration: 1, delay: 2, options: [.repeat,.autoreverse,.curveEaseInOut], animations: {
+            self.stateView.alpha = 0
+        }) { (finished) in
+        }
         
         #if DEBUG
             debugButton.isHidden = false
@@ -66,6 +70,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             }) { (value) in
             }
         }
+        messageLabel.alpha = 0
         sender.isSelected = !sender.isSelected;
         if line == nil {
             let startPos = worldPositionFromScreenPosition(indicator.center, objectPos: nil, infinitePlane: true)
@@ -88,6 +93,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     }
     
     @IBAction func debugAction(_ sender: UIButton) {
+        showDebugVisuals = !showDebugVisuals
         if showDebugVisuals {
             planes.values.forEach { $0.showDebugVisualization(showDebugVisuals) }
             sceneView.debugOptions = [ARSCNDebugOptions.showFeaturePoints , ARSCNDebugOptions.showWorldOrigin]
@@ -95,7 +101,6 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             planes.values.forEach { $0.showDebugVisualization(showDebugVisuals) }
             sceneView.debugOptions = []
         }
-        showDebugVisuals = !showDebugVisuals
     }
     
     // MARK: - ARSCNViewDelegate
@@ -157,9 +162,27 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     func updateLine() -> Void {
         let startPos = self.worldPositionFromScreenPosition(self.indicator.center, objectPos: nil, infinitePlane: true)
         if let p = startPos.position {
-            let length = self.line?.updatePosition(pos: p, camera: self.sceneView.session.currentFrame?.camera)
-            self.distanceLabel.text = length
+            let length = self.line?.updatePosition(pos: p, camera: self.sceneView.session.currentFrame?.camera) ?? 0
+            updateDistanceLabel(distance: length)
         }
+    }
+    
+    func updateDistanceLabel(distance:Float) -> Void {
+        let chi = NSAttributedString(string: Float.LengthUnit.Ruler.rate.1, attributes: [NSAttributedStringKey.font:UIFont.systemFont(ofSize: 12)])
+        let cm = NSAttributedString(string: Float.LengthUnit.CentiMeter.rate.1, attributes: [NSAttributedStringKey.font:UIFont.systemFont(ofSize: 15)])
+        let inch = NSAttributedString(string: Float.LengthUnit.Inch.rate.1, attributes: [NSAttributedStringKey.font:UIFont.systemFont(ofSize: 12)])
+        var dis = String(format: "%.2f", arguments: [distance*Float.LengthUnit.Ruler.rate.0])
+        var result = NSMutableAttributedString(string: dis, attributes:[NSAttributedStringKey.font:UIFont.boldSystemFont(ofSize: 18)])
+        result.append(chi)
+        distanceLabel_Left.attributedText = result
+        dis = String(format: "%.2f", arguments: [distance*Float.LengthUnit.CentiMeter.rate.0])
+        result = NSMutableAttributedString(string: dis, attributes:[NSAttributedStringKey.font:UIFont.boldSystemFont(ofSize: 25)])
+        result.append(cm)
+        distanceLabel_Center.attributedText = result
+        dis = String(format: "%.2f", arguments: [distance*Float.LengthUnit.Inch.rate.0])
+        result = NSMutableAttributedString(string: dis, attributes:[NSAttributedStringKey.font:UIFont.boldSystemFont(ofSize: 18)])
+        result.append(inch)
+        distanceLabel_Right.attributedText = result
     }
     
     // MARK: - Planes
@@ -168,20 +191,22 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     
     func addPlane(node: SCNNode, anchor: ARPlaneAnchor) {
         
-        let pos = SCNVector3.positionFromTransform(anchor.transform)
-        textManager.showDebugMessage("NEW SURFACE DETECTED AT \(pos.friendlyString())")
-        
-        let plane = Plane(anchor, true)
+        let plane = Plane(anchor, showDebugVisuals)
         
         planes[anchor] = plane
         node.addChildNode(plane)
         
-        textManager.cancelScheduledMessage(forType: .planeEstimation)
-        textManager.showMessage("SURFACE DETECTED")
-        
         stateView.image = #imageLiteral(resourceName: "green")
         indicator.tintColor = #colorLiteral(red: 0.5843137503, green: 0.8235294223, blue: 0.4196078479, alpha: 1)
         placeButton.isEnabled = true
+        
+        messageLabel.text = "可以开始测量了"
+        UIView.animate(withDuration: 1) {
+            self.messageLabel.alpha = 0
+            self.distanceLabel_Left.alpha = 1
+            self.distanceLabel_Center.alpha = 1
+            self.distanceLabel_Right.alpha = 1
+        }
     }
     
     func updatePlane(anchor: ARPlaneAnchor) {
@@ -202,12 +227,15 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         configuration.planeDetection = .horizontal
         // Run the view's session
         sceneView.session.run(configuration, options: [.resetTracking, .removeExistingAnchors])
-        textManager.scheduleMessage("FIND A SURFACE TO PLACE AN OBJECT",
-                                    inSeconds: 7.5,
-                                    messageType: .planeEstimation)
+        
         stateView.image = #imageLiteral(resourceName: "red")
         indicator.tintColor = #colorLiteral(red: 0.9254902005, green: 0.2352941185, blue: 0.1019607857, alpha: 1)
         placeButton.isEnabled = false
+        messageLabel.text = "请左右移动您的手机"
+        messageLabel.alpha = 1
+        distanceLabel_Left.alpha = 0
+        distanceLabel_Center.alpha = 0
+        distanceLabel_Right.alpha = 0
     }
     
     // MARK: - Focus Square
@@ -218,16 +246,18 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         focusSquare?.removeFromParentNode()
         focusSquare = FocusSquare()
         sceneView.scene.rootNode.addChildNode(focusSquare!)
-        
-        textManager.scheduleMessage("TRY MOVING LEFT OR RIGHT", inSeconds: 5.0, messageType: .focusSquare)
     }
     
     func updateFocusSquare() {
-        focusSquare?.unhide()
+        if showDebugVisuals {
+            focusSquare?.unhide()
+        }else{
+            focusSquare?.hide()
+        }
+        
         let (worldPos, planeAnchor, _) = worldPositionFromScreenPosition(self.sceneView.bounds.mid, objectPos: focusSquare?.position)
         if let worldPos = worldPos {
             focusSquare?.update(for: worldPos, planeAnchor: planeAnchor, camera: self.sceneView.session.currentFrame?.camera)
-            textManager.cancelScheduledMessage(forType: .focusSquare)
         }
     }
 }
@@ -301,8 +331,4 @@ extension ViewController {
         
         return (nil, nil, false)
     }
-}
-
-extension ViewController {
-    
 }
