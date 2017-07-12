@@ -40,7 +40,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         }
         
         #if DEBUG
-            debugButton.isHidden = true
+            debugButton.isHidden = false
         #endif
     }
     
