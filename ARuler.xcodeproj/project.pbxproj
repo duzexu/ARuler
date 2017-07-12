@@ -7,9 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		BE40FC6B1F0F73050010D8FD /* PlaneDebugVisualization.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE40FC681F0F73040010D8FD /* PlaneDebugVisualization.swift */; };
-		BE40FC6C1F0F73050010D8FD /* Plane.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE40FC691F0F73040010D8FD /* Plane.swift */; };
-		BE40FC6D1F0F73050010D8FD /* FocusSquare.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE40FC6A1F0F73040010D8FD /* FocusSquare.swift */; };
 		BE78540F1F0A5797007545E0 /* LineNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE78540E1F0A5797007545E0 /* LineNode.swift */; };
 		BEC37AAA1F0B8C5300FC4290 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEC37AA91F0B8C3D00FC4290 /* Utilities.swift */; };
 		BEF8B8091F063C6F00084079 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF8B8081F063C6F00084079 /* AppDelegate.swift */; };
@@ -18,12 +15,13 @@
 		BEF8B8101F063C6F00084079 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BEF8B80E1F063C6F00084079 /* Main.storyboard */; };
 		BEF8B8121F063C6F00084079 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BEF8B8111F063C6F00084079 /* Assets.xcassets */; };
 		BEF8B8151F063C6F00084079 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BEF8B8131F063C6F00084079 /* LaunchScreen.storyboard */; };
+		D741157C1F16527500BF7C8C /* FocusSquare.swift in Sources */ = {isa = PBXBuildFile; fileRef = D741157B1F16525A00BF7C8C /* FocusSquare.swift */; };
+		D741157D1F16527500BF7C8C /* Plane.swift in Sources */ = {isa = PBXBuildFile; fileRef = D741157A1F16525A00BF7C8C /* Plane.swift */; };
+		D741157E1F16527500BF7C8C /* PlaneDebugVisualization.swift in Sources */ = {isa = PBXBuildFile; fileRef = D74115791F16525A00BF7C8C /* PlaneDebugVisualization.swift */; };
+		D74115801F16536300BF7C8C /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = D741157F1F16536300BF7C8C /* Settings.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		BE40FC681F0F73040010D8FD /* PlaneDebugVisualization.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PlaneDebugVisualization.swift; path = "../../ARKit-Example-by-Apple-master/ARKitExample/UI Elements/PlaneDebugVisualization.swift"; sourceTree = "<group>"; };
-		BE40FC691F0F73040010D8FD /* Plane.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Plane.swift; path = "../../ARKit-Example-by-Apple-master/ARKitExample/UI Elements/Plane.swift"; sourceTree = "<group>"; };
-		BE40FC6A1F0F73040010D8FD /* FocusSquare.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FocusSquare.swift; path = "../../ARKit-Example-by-Apple-master/ARKitExample/UI Elements/FocusSquare.swift"; sourceTree = "<group>"; };
 		BE78540E1F0A5797007545E0 /* LineNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineNode.swift; sourceTree = "<group>"; };
 		BEC37AA91F0B8C3D00FC4290 /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		BEF8B8051F063C6F00084079 /* ARuler.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ARuler.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -34,6 +32,10 @@
 		BEF8B8111F063C6F00084079 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BEF8B8141F063C6F00084079 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		BEF8B8161F063C6F00084079 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D74115791F16525A00BF7C8C /* PlaneDebugVisualization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaneDebugVisualization.swift; sourceTree = "<group>"; };
+		D741157A1F16525A00BF7C8C /* Plane.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Plane.swift; sourceTree = "<group>"; };
+		D741157B1F16525A00BF7C8C /* FocusSquare.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusSquare.swift; sourceTree = "<group>"; };
+		D741157F1F16536300BF7C8C /* Settings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Settings.swift; path = ../../../Desktop/Settings.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,10 +71,11 @@
 				BEF8B8081F063C6F00084079 /* AppDelegate.swift */,
 				BEF8B80A1F063C6F00084079 /* art.scnassets */,
 				BEF8B80C1F063C6F00084079 /* ViewController.swift */,
-				BE40FC6A1F0F73040010D8FD /* FocusSquare.swift */,
-				BE40FC691F0F73040010D8FD /* Plane.swift */,
-				BE40FC681F0F73040010D8FD /* PlaneDebugVisualization.swift */,
 				BE78540E1F0A5797007545E0 /* LineNode.swift */,
+				D741157B1F16525A00BF7C8C /* FocusSquare.swift */,
+				D741157A1F16525A00BF7C8C /* Plane.swift */,
+				D741157F1F16536300BF7C8C /* Settings.swift */,
+				D74115791F16525A00BF7C8C /* PlaneDebugVisualization.swift */,
 				BEC37AA91F0B8C3D00FC4290 /* Utilities.swift */,
 				BEF8B80E1F063C6F00084079 /* Main.storyboard */,
 				BEF8B8111F063C6F00084079 /* Assets.xcassets */,
@@ -155,12 +158,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				BEC37AAA1F0B8C5300FC4290 /* Utilities.swift in Sources */,
-				BE40FC6D1F0F73050010D8FD /* FocusSquare.swift in Sources */,
 				BEF8B80D1F063C6F00084079 /* ViewController.swift in Sources */,
 				BEF8B8091F063C6F00084079 /* AppDelegate.swift in Sources */,
-				BE40FC6B1F0F73050010D8FD /* PlaneDebugVisualization.swift in Sources */,
-				BE40FC6C1F0F73050010D8FD /* Plane.swift in Sources */,
 				BE78540F1F0A5797007545E0 /* LineNode.swift in Sources */,
+				D741157D1F16527500BF7C8C /* Plane.swift in Sources */,
+				D741157E1F16527500BF7C8C /* PlaneDebugVisualization.swift in Sources */,
+				D741157C1F16527500BF7C8C /* FocusSquare.swift in Sources */,
+				D74115801F16536300BF7C8C /* Settings.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
