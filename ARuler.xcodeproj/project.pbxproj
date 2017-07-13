@@ -18,7 +18,6 @@
 		D741157C1F16527500BF7C8C /* FocusSquare.swift in Sources */ = {isa = PBXBuildFile; fileRef = D741157B1F16525A00BF7C8C /* FocusSquare.swift */; };
 		D741157D1F16527500BF7C8C /* Plane.swift in Sources */ = {isa = PBXBuildFile; fileRef = D741157A1F16525A00BF7C8C /* Plane.swift */; };
 		D741157E1F16527500BF7C8C /* PlaneDebugVisualization.swift in Sources */ = {isa = PBXBuildFile; fileRef = D74115791F16525A00BF7C8C /* PlaneDebugVisualization.swift */; };
-		D74115801F16536300BF7C8C /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = D741157F1F16536300BF7C8C /* Settings.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,7 +34,6 @@
 		D74115791F16525A00BF7C8C /* PlaneDebugVisualization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaneDebugVisualization.swift; sourceTree = "<group>"; };
 		D741157A1F16525A00BF7C8C /* Plane.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Plane.swift; sourceTree = "<group>"; };
 		D741157B1F16525A00BF7C8C /* FocusSquare.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusSquare.swift; sourceTree = "<group>"; };
-		D741157F1F16536300BF7C8C /* Settings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Settings.swift; path = ../../../Desktop/Settings.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,7 +72,6 @@
 				BE78540E1F0A5797007545E0 /* LineNode.swift */,
 				D741157B1F16525A00BF7C8C /* FocusSquare.swift */,
 				D741157A1F16525A00BF7C8C /* Plane.swift */,
-				D741157F1F16536300BF7C8C /* Settings.swift */,
 				D74115791F16525A00BF7C8C /* PlaneDebugVisualization.swift */,
 				BEC37AA91F0B8C3D00FC4290 /* Utilities.swift */,
 				BEF8B80E1F063C6F00084079 /* Main.storyboard */,
@@ -164,7 +161,6 @@
 				D741157D1F16527500BF7C8C /* Plane.swift in Sources */,
 				D741157E1F16527500BF7C8C /* PlaneDebugVisualization.swift in Sources */,
 				D741157C1F16527500BF7C8C /* FocusSquare.swift in Sources */,
-				D74115801F16536300BF7C8C /* Settings.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -19,7 +19,7 @@ class PlaneDebugVisualization: SCNNode {
 		
 		self.planeAnchor = anchor
 		
-        let grid = UIImage(named: "Models.scnassets/plane_grid.png")
+        let grid = UIImage(named: "art.scnassets/plane_grid.png")
 		self.planeGeometry = createPlane(size: CGSize(width: CGFloat(anchor.extent.x), height: CGFloat(anchor.extent.z)),
 		                                 contents: grid)
 		self.planeNode = SCNNode(geometry: planeGeometry)
