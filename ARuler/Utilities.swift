@@ -15,7 +15,7 @@ extension UIImage {
         guard let ciImage = CIImage(image: self) else {
             return nil
         }
-        return UIImage(ciImage: ciImage.applyingFilter("CIColorInvert", withInputParameters: nil))
+        return UIImage(ciImage: ciImage.applyingFilter("CIColorInvert"))
     }
 	
 	static func composeButtonImage(from thumbImage: UIImage, alpha: CGFloat = 1.0) -> UIImage {
@@ -429,6 +429,10 @@ extension ARCamera.TrackingState {
                 return "TRACKING LIMITED\nToo much camera movement"
             case .insufficientFeatures:
                 return "TRACKING LIMITED\nNot enough surface detail"
+            case .none:
+                return "TRACKING NOT LIMITED"
+            case .initializing:
+                return "TRACKING LIMITED\nInitialization in progress"
             }
         }
     }
