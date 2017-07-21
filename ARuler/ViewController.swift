@@ -14,7 +14,6 @@ class ViewController: UIViewController, ARSCNViewDelegate {
 
     @IBOutlet var sceneView: ARSCNView!
     @IBOutlet var indicator: UIImageView!
-    @IBOutlet var stateView: UIImageView!
     @IBOutlet var placeButton: UIButton!
     @IBOutlet var distanceLabel_Left: UILabel!
     @IBOutlet var distanceLabel_Center: UILabel!
@@ -34,10 +33,6 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         sceneView.delegate = self
         
         setupFocusSquare()
-        UIView.animate(withDuration: 1, delay: 2, options: [.repeat,.autoreverse,.curveEaseInOut], animations: {
-            self.stateView.alpha = 0
-        }) { (finished) in
-        }
         
         #if DEBUG
             debugButton.isHidden = false
@@ -70,10 +65,9 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             }) { (value) in
             }
         }
-        messageLabel.alpha = 0
         sender.isSelected = !sender.isSelected;
         if line == nil {
-            let startPos = worldPositionFromScreenPosition(indicator.center, objectPos: nil, infinitePlane: true)
+            let startPos = worldPositionFromScreenPosition(indicator.center, objectPos: nil)
             if let p = startPos.position {
                 line = LineNode(startPos: p, sceneV: sceneView)
             }
@@ -99,7 +93,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             sceneView.debugOptions = [ARSCNDebugOptions.showFeaturePoints , ARSCNDebugOptions.showWorldOrigin]
         }else{
             planes.values.forEach { $0.showDebugVisualization(showDebugVisuals) }
-            sceneView.debugOptions = []
+            sceneView.debugOptions = [ARSCNDebugOptions.showFeaturePoints]
         }
     }
     
@@ -160,8 +154,20 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     }
     
     func updateLine() -> Void {
-        let startPos = self.worldPositionFromScreenPosition(self.indicator.center, objectPos: nil, infinitePlane: true)
+        let startPos = self.worldPositionFromScreenPosition(self.indicator.center, objectPos: nil)
         if let p = startPos.position {
+            let camera = self.sceneView.session.currentFrame?.camera
+            let cameraPos = SCNVector3.positionFromTransform(camera!.transform)
+            if cameraPos.distanceFromPos(pos: p) < 0.05 {
+                if line == nil {
+                    placeButton.isEnabled = false
+                    indicator.tintColor = #colorLiteral(red: 0.9254902005, green: 0.2352941185, blue: 0.1019607857, alpha: 1)
+                }
+                return;
+            }
+            hideMessage()
+            placeButton.isEnabled = true
+            indicator.tintColor = #colorLiteral(red: 0.5843137503, green: 0.8235294223, blue: 0.4196078479, alpha: 1)
             let length = self.line?.updatePosition(pos: p, camera: self.sceneView.session.currentFrame?.camera) ?? 0
             updateDistanceLabel(distance: length)
         }
@@ -196,17 +202,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         planes[anchor] = plane
         node.addChildNode(plane)
         
-        stateView.image = #imageLiteral(resourceName: "green")
         indicator.tintColor = #colorLiteral(red: 0.5843137503, green: 0.8235294223, blue: 0.4196078479, alpha: 1)
-        placeButton.isEnabled = true
-        
-        messageLabel.text = "可以开始测量了"
-        UIView.animate(withDuration: 1) {
-            self.messageLabel.alpha = 0
-            self.distanceLabel_Left.alpha = 1
-            self.distanceLabel_Center.alpha = 1
-            self.distanceLabel_Right.alpha = 1
-        }
     }
     
     func updatePlane(anchor: ARPlaneAnchor) {
@@ -227,15 +223,33 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         configuration.planeDetection = .horizontal
         // Run the view's session
         sceneView.session.run(configuration, options: [.resetTracking, .removeExistingAnchors])
+        sceneView.debugOptions = [ARSCNDebugOptions.showFeaturePoints]
         
-        stateView.image = #imageLiteral(resourceName: "red")
         indicator.tintColor = #colorLiteral(red: 0.9254902005, green: 0.2352941185, blue: 0.1019607857, alpha: 1)
-        placeButton.isEnabled = false
-        messageLabel.text = "请左右移动您的手机"
-        messageLabel.alpha = 1
-        distanceLabel_Left.alpha = 0
-        distanceLabel_Center.alpha = 0
-        distanceLabel_Right.alpha = 0
+        showMessage("请左右移动您的手机", autoHide: false)
+    }
+    
+    func showMessage(_ msg:String ,autoHide:Bool = true) {
+        UIView.animate(withDuration: 0.5) {
+            self.messageLabel.text = msg
+            self.messageLabel.alpha = 1
+            self.distanceLabel_Left.alpha = 0
+            self.distanceLabel_Center.alpha = 0
+            self.distanceLabel_Right.alpha = 0
+        }
+        if autoHide {
+            NSObject.cancelPreviousPerformRequests(withTarget: self)
+            self.perform(#selector(hideMessage), with: nil, afterDelay: 0.3)
+        }
+    }
+    
+    @objc func hideMessage() {
+        UIView.animate(withDuration: 0.5) {
+            self.messageLabel.alpha = 0
+            self.distanceLabel_Left.alpha = 1
+            self.distanceLabel_Center.alpha = 1
+            self.distanceLabel_Right.alpha = 1
+        }
     }
     
     // MARK: - Focus Square
@@ -288,7 +302,7 @@ extension ViewController {
         var featureHitTestPosition: SCNVector3?
         var highQualityFeatureHitTestResult = false
         
-        let highQualityfeatureHitTestResults = sceneView.hitTestWithFeatures(position, coneOpeningAngleInDegrees: 18, minDistance: 0.2, maxDistance: 2.0)
+        let highQualityfeatureHitTestResults = sceneView.hitTestWithFeatures(position, coneOpeningAngleInDegrees: 18, minDistance: 0.0, maxDistance: 0.05)
         
         if !highQualityfeatureHitTestResults.isEmpty {
             let result = highQualityfeatureHitTestResults[0]

@@ -111,7 +111,7 @@ extension SCNNode {
         let minVec = self.boundingBox.min
         let maxVec = self.boundingBox.max
         let bound = SCNVector3Make( maxVec.x - minVec.x, maxVec.y - minVec.y, maxVec.z - minVec.z);
-        self.pivot = SCNMatrix4MakeTranslation(bound.x / 2, bound.y / 2, bound.z / 2);
+        self.pivot = SCNMatrix4MakeTranslation(bound.x / 2, bound.y, bound.z / 2);
     }
 }
 

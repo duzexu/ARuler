@@ -44,7 +44,6 @@ class LineNode: NSObject {
         text.firstMaterial?.isDoubleSided = true
         textNode = SCNNode(geometry: text)
         textNode.scale = SCNVector3(1/500.0, 1/500.0, 1/500.0)
-        textNode.rotation = SCNVector4(1, 0, 0, -Double.pi/2.0)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -128,8 +127,7 @@ class LineNode: NSObject {
             default:
                 angle = yaw
             }
-            textNode.runAction(SCNAction.rotateTo(x: CGFloat(-Float.pi/2.0), y: CGFloat(angle), z: 0, duration: 0))
-//            textNode.rotation = SCNVector4Make(0, 1, 0, angle)
+            textNode.runAction(SCNAction.rotateTo(x: 0, y: CGFloat(angle), z: 0, duration: 0))
         }
         
         // move to average of recent positions to avoid jitter
