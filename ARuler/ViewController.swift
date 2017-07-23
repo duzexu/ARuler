@@ -226,7 +226,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         sceneView.debugOptions = [ARSCNDebugOptions.showFeaturePoints]
         
         indicator.tintColor = #colorLiteral(red: 0.9254902005, green: 0.2352941185, blue: 0.1019607857, alpha: 1)
-        showMessage("请左右移动您的手机", autoHide: false)
+        showMessage(NSLocalizedString("MOVE", comment: "User Tips"), autoHide: false)
     }
     
     func showMessage(_ msg:String ,autoHide:Bool = true) {
