@@ -8,7 +8,6 @@ Mesure distance using apple ARKit
 [ENGLISH README](./README_EN.md)
 
 ## 预览
-  <img src="./Design/preview.gif" width="320"/>
   <img src="./Design/preview_vertical.gif" width="320"/>
   
 ## 安装
