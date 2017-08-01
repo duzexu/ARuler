@@ -479,7 +479,7 @@ extension ARSCNView {
 		return rayIntersectionWithHorizontalPlane(rayOrigin: ray.origin, direction: ray.direction, planeY: pointOnPlane.y)
 	}
 	
-	struct FeatureHitTestResult {
+    struct FeatureHitTestResult {
 		let position: SCNVector3
 		let distanceToRayOrigin: Float
 		let featureHit: SCNVector3
@@ -489,7 +489,7 @@ extension ARSCNView {
 	func hitTestWithFeatures(_ point: CGPoint, coneOpeningAngleInDegrees: Float,
 	                         minDistance: Float = 0,
 	                         maxDistance: Float = Float.greatestFiniteMagnitude,
-	                         maxResults: Int = 1) -> [FeatureHitTestResult] {
+	                         maxResults: Int = 40) -> [FeatureHitTestResult] {
 		
 		var results = [FeatureHitTestResult]()
 		
@@ -541,7 +541,7 @@ extension ARSCNView {
 		
 		// Sort the results by feature distance to the ray.
 		results = results.sorted(by: { (first, second) -> Bool in
-			return first.distanceToRayOrigin < second.distanceToRayOrigin
+			return first.distanceToRayOrigin > second.distanceToRayOrigin
 		})
 		
 		// Cap the list to maxResults.

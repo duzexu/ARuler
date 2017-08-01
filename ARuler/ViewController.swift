@@ -302,12 +302,38 @@ extension ViewController {
         var featureHitTestPosition: SCNVector3?
         var highQualityFeatureHitTestResult = false
         
-        let highQualityfeatureHitTestResults = sceneView.hitTestWithFeatures(position, coneOpeningAngleInDegrees: 18, minDistance: 0.0, maxDistance: 0.05)
+        let highQualityfeatureHitTestResults = sceneView.hitTestWithFeatures(position, coneOpeningAngleInDegrees: 5, minDistance: 0.1, maxDistance: 3.0)
         
         if !highQualityfeatureHitTestResults.isEmpty {
             let result = highQualityfeatureHitTestResults[0]
             featureHitTestPosition = result.position
             highQualityFeatureHitTestResult = true
+        }
+        
+        // 根据特征点进行平面推定
+        NSLog("%d", highQualityfeatureHitTestResults.count)
+        if highQualityfeatureHitTestResults.count >= 3 {
+            var featureCloud = Array<NSValue>()
+            for result in highQualityfeatureHitTestResults {
+                let value = NSValue(scnVector3: result.position)
+                featureCloud.append(value)
+            }
+            let detectPlane = planeDetectWithFeatureCloud(featureCloud: featureCloud)
+            
+            var planePoint = SCNVector3Zero
+            if detectPlane.x != 0 {
+                planePoint = SCNVector3(detectPlane.w/detectPlane.x,0,0)
+            }else if detectPlane.y != 0 {
+                planePoint = SCNVector3(0,detectPlane.w/detectPlane.y,0)
+            }else {
+                planePoint = SCNVector3(0,0,detectPlane.w/detectPlane.z)
+            }
+            
+            let ray = sceneView.hitTestRayFromScreenPos(position)
+            let crossPoint = planeLineIntersectPoint(planeVector: SCNVector3(detectPlane.x,detectPlane.y,detectPlane.z), planePoint: planePoint, lineVector: ray!.direction, linePoint: ray!.origin)
+            if crossPoint != nil {
+                return (crossPoint, nil, false)
+            }
         }
         
         // -------------------------------------------------------------------------------
@@ -344,5 +370,31 @@ extension ViewController {
         }
         
         return (nil, nil, false)
+    }
+    
+    
+    func planeDetectWithFeatureCloud(featureCloud: [NSValue]) -> SCNVector4 {
+        let result = PlaneDetector.detectPlane(withPoints: featureCloud)
+        return result
+    }
+    
+    /// 根据直线上的点和向量及平面上的点和法向量计算交点
+    ///
+    /// - Parameters:
+    ///   - planeVector: 平面法向量
+    ///   - planePoint: 平面上一点
+    ///   - lineVector: 直线向量
+    ///   - linePoint: 直线上一点
+    /// - Returns: 交点
+    func planeLineIntersectPoint(planeVector: SCNVector3 , planePoint: SCNVector3, lineVector: SCNVector3, linePoint: SCNVector3) -> SCNVector3? {
+        let vpt = planeVector.x*lineVector.x + planeVector.y*lineVector.y + planeVector.z*lineVector.z
+        if vpt != 0 {
+            let t = ((planePoint.x-linePoint.x)*planeVector.x + (planePoint.y-linePoint.y)*planeVector.y + (planePoint.z-linePoint.z)*planeVector.z)/vpt
+            let cross = SCNVector3Make(linePoint.x + lineVector.x*t, linePoint.y + lineVector.y*t, linePoint.z + lineVector.z*t)
+            if (cross-linePoint).length() < 5 {
+               return cross
+            }
+        }
+        return nil
     }
 }

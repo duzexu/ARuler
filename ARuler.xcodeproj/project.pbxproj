@@ -7,7 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		308391B61F2F726500AA2EA1 /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 308391B51F2F726500AA2EA1 /* opencv2.framework */; };
 		308882CF1F24B9B000949E66 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 308882D11F24B9B000949E66 /* Localizable.strings */; };
+		30E2EDD31F2F783900C875CE /* PlaneDetector.mm in Sources */ = {isa = PBXBuildFile; fileRef = 30E2EDD21F2F783900C875CE /* PlaneDetector.mm */; };
 		BE78540F1F0A5797007545E0 /* LineNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE78540E1F0A5797007545E0 /* LineNode.swift */; };
 		BEC37AAA1F0B8C5300FC4290 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEC37AA91F0B8C3D00FC4290 /* Utilities.swift */; };
 		BEF8B8091F063C6F00084079 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF8B8081F063C6F00084079 /* AppDelegate.swift */; };
@@ -22,10 +24,14 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		308391B51F2F726500AA2EA1 /* opencv2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = opencv2.framework; sourceTree = "<group>"; };
+		308391B71F2F739F00AA2EA1 /* ARuler-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ARuler-Bridging-Header.h"; sourceTree = "<group>"; };
 		308882CB1F24B87A00949E66 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
 		308882CC1F24B87A00949E66 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
 		308882D01F24B9B000949E66 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		308882D21F24B9B300949E66 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		30E2EDD11F2F783900C875CE /* PlaneDetector.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PlaneDetector.h; sourceTree = "<group>"; };
+		30E2EDD21F2F783900C875CE /* PlaneDetector.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = PlaneDetector.mm; sourceTree = "<group>"; };
 		BE78540E1F0A5797007545E0 /* LineNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineNode.swift; sourceTree = "<group>"; };
 		BEC37AA91F0B8C3D00FC4290 /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		BEF8B8051F063C6F00084079 /* ARuler.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ARuler.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -46,6 +52,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				308391B61F2F726500AA2EA1 /* opencv2.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -71,6 +78,7 @@
 		BEF8B8071F063C6F00084079 /* ARuler */ = {
 			isa = PBXGroup;
 			children = (
+				308391B51F2F726500AA2EA1 /* opencv2.framework */,
 				BEF8B8081F063C6F00084079 /* AppDelegate.swift */,
 				BEF8B80A1F063C6F00084079 /* art.scnassets */,
 				BEF8B80C1F063C6F00084079 /* ViewController.swift */,
@@ -79,11 +87,14 @@
 				D741157A1F16525A00BF7C8C /* Plane.swift */,
 				D74115791F16525A00BF7C8C /* PlaneDebugVisualization.swift */,
 				BEC37AA91F0B8C3D00FC4290 /* Utilities.swift */,
+				30E2EDD11F2F783900C875CE /* PlaneDetector.h */,
+				30E2EDD21F2F783900C875CE /* PlaneDetector.mm */,
 				BEF8B80E1F063C6F00084079 /* Main.storyboard */,
 				BEF8B8111F063C6F00084079 /* Assets.xcassets */,
 				BEF8B8131F063C6F00084079 /* LaunchScreen.storyboard */,
 				BEF8B8161F063C6F00084079 /* Info.plist */,
 				308882D11F24B9B000949E66 /* Localizable.strings */,
+				308391B71F2F739F00AA2EA1 /* ARuler-Bridging-Header.h */,
 			);
 			path = ARuler;
 			sourceTree = "<group>";
@@ -120,6 +131,7 @@
 				TargetAttributes = {
 					BEF8B8041F063C6F00084079 = {
 						CreatedOnToolsVersion = 9.0;
+						LastSwiftMigration = 0830;
 					};
 				};
 			};
@@ -166,6 +178,7 @@
 				BEF8B80D1F063C6F00084079 /* ViewController.swift in Sources */,
 				BEF8B8091F063C6F00084079 /* AppDelegate.swift in Sources */,
 				BE78540F1F0A5797007545E0 /* LineNode.swift in Sources */,
+				30E2EDD31F2F783900C875CE /* PlaneDetector.mm in Sources */,
 				D741157D1F16527500BF7C8C /* Plane.swift in Sources */,
 				D741157E1F16527500BF7C8C /* PlaneDebugVisualization.swift in Sources */,
 				D741157C1F16527500BF7C8C /* FocusSquare.swift in Sources */,
@@ -314,11 +327,18 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = S6ZSA2VV9P;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/ARuler",
+				);
 				INFOPLIST_FILE = ARuler/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.duzexu.www.ARuler;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "ARuler/ARuler-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -328,11 +348,17 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = S6ZSA2VV9P;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/ARuler",
+				);
 				INFOPLIST_FILE = ARuler/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.duzexu.www.ARuler;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "ARuler/ARuler-Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
