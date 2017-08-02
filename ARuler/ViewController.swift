@@ -287,10 +287,10 @@ extension ViewController {
         
         let planeHitTestResults = sceneView.hitTest(position, types: .existingPlaneUsingExtent)
         if let result = planeHitTestResults.first {
-            
+
             let planeHitTestPosition = SCNVector3.positionFromTransform(result.worldTransform)
             let planeAnchor = result.anchor
-            
+
             // Return immediately - this is the best possible outcome.
             return (planeHitTestPosition, planeAnchor as? ARPlaneAnchor, true)
         }
@@ -304,21 +304,15 @@ extension ViewController {
         
         let highQualityfeatureHitTestResults = sceneView.hitTestWithFeatures(position, coneOpeningAngleInDegrees: 5, minDistance: 0.1, maxDistance: 3.0)
         
-        if !highQualityfeatureHitTestResults.isEmpty {
-            let result = highQualityfeatureHitTestResults[0]
-            featureHitTestPosition = result.position
-            highQualityFeatureHitTestResult = true
-        }
-        
         // 根据特征点进行平面推定
-        NSLog("%d", highQualityfeatureHitTestResults.count)
-        if highQualityfeatureHitTestResults.count >= 3 {
-            var featureCloud = Array<NSValue>()
-            for result in highQualityfeatureHitTestResults {
-                let value = NSValue(scnVector3: result.position)
-                featureCloud.append(value)
-            }
-            let detectPlane = planeDetectWithFeatureCloud(featureCloud: featureCloud)
+        let featureCloud = sceneView.fliterWithFeatures(highQualityfeatureHitTestResults)
+        
+        if featureCloud.count >= 3 {
+            let warpFeatures = featureCloud.map({ (feature) -> NSValue in
+                return NSValue(scnVector3: feature)
+            })
+            
+            let detectPlane = planeDetectWithFeatureCloud(featureCloud: warpFeatures)
             
             var planePoint = SCNVector3Zero
             if detectPlane.x != 0 {
@@ -333,7 +327,19 @@ extension ViewController {
             let crossPoint = planeLineIntersectPoint(planeVector: SCNVector3(detectPlane.x,detectPlane.y,detectPlane.z), planePoint: planePoint, lineVector: ray!.direction, linePoint: ray!.origin)
             if crossPoint != nil {
                 return (crossPoint, nil, false)
+            }else{
+                return (featureCloud.average!, nil, false)
             }
+        }
+        
+        if !featureCloud.isEmpty {
+            featureHitTestPosition = featureCloud.average
+            highQualityFeatureHitTestResult = true
+        }else if !highQualityfeatureHitTestResults.isEmpty {
+            featureHitTestPosition = highQualityfeatureHitTestResults.map { (featureHitTestResult) -> SCNVector3 in
+                return featureHitTestResult.position
+            }.average
+            highQualityFeatureHitTestResult = true
         }
         
         // -------------------------------------------------------------------------------
