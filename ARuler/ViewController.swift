@@ -304,7 +304,7 @@ extension ViewController {
         
         let highQualityfeatureHitTestResults = sceneView.hitTestWithFeatures(position, coneOpeningAngleInDegrees: 5, minDistance: 0.1, maxDistance: 3.0)
         
-        // 根据特征点进行平面推定
+        // 过滤特征点
         let featureCloud = sceneView.fliterWithFeatures(highQualityfeatureHitTestResults)
         
         if featureCloud.count >= 3 {
@@ -312,6 +312,7 @@ extension ViewController {
                 return NSValue(scnVector3: feature)
             })
             
+            // 根据特征点进行平面推定
             let detectPlane = planeDetectWithFeatureCloud(featureCloud: warpFeatures)
             
             var planePoint = SCNVector3Zero
