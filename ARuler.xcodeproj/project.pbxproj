@@ -10,6 +10,7 @@
 		308391B61F2F726500AA2EA1 /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 308391B51F2F726500AA2EA1 /* opencv2.framework */; };
 		308882CF1F24B9B000949E66 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 308882D11F24B9B000949E66 /* Localizable.strings */; };
 		30E2EDD31F2F783900C875CE /* PlaneDetector.mm in Sources */ = {isa = PBXBuildFile; fileRef = 30E2EDD21F2F783900C875CE /* PlaneDetector.mm */; };
+		BE7476EB1F46E04D00AD2281 /* ARKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE7476EA1F46E04D00AD2281 /* ARKit.framework */; };
 		BE78540F1F0A5797007545E0 /* LineNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE78540E1F0A5797007545E0 /* LineNode.swift */; };
 		BEC37AAA1F0B8C5300FC4290 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEC37AA91F0B8C3D00FC4290 /* Utilities.swift */; };
 		BEF8B8091F063C6F00084079 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF8B8081F063C6F00084079 /* AppDelegate.swift */; };
@@ -32,6 +33,7 @@
 		308882D21F24B9B300949E66 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		30E2EDD11F2F783900C875CE /* PlaneDetector.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PlaneDetector.h; sourceTree = "<group>"; };
 		30E2EDD21F2F783900C875CE /* PlaneDetector.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = PlaneDetector.mm; sourceTree = "<group>"; };
+		BE7476EA1F46E04D00AD2281 /* ARKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ARKit.framework; path = System/Library/Frameworks/ARKit.framework; sourceTree = SDKROOT; };
 		BE78540E1F0A5797007545E0 /* LineNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineNode.swift; sourceTree = "<group>"; };
 		BEC37AA91F0B8C3D00FC4290 /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		BEF8B8051F063C6F00084079 /* ARuler.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ARuler.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -52,6 +54,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BE7476EB1F46E04D00AD2281 /* ARKit.framework in Frameworks */,
 				308391B61F2F726500AA2EA1 /* opencv2.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -59,11 +62,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		BE7476E91F46E04D00AD2281 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				BE7476EA1F46E04D00AD2281 /* ARKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		BEF8B7FC1F063C6F00084079 = {
 			isa = PBXGroup;
 			children = (
 				BEF8B8071F063C6F00084079 /* ARuler */,
 				BEF8B8061F063C6F00084079 /* Products */,
+				BE7476E91F46E04D00AD2281 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
