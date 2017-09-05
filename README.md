@@ -13,8 +13,6 @@ Mesure distance using apple ARKit
 ## 运行
 因为使用的opencv库有140m，超过了github的100m上传限制，所以使用了git-lfs，建议自己下载[opencv-3.2.0](http://opencv.org/releases.html)的包替换下
 
-或者使用支持git-lfs的工具[Tower](https://www.git-tower.com/mac/)拉取代码
-
 ## 安装
 因为ARKit使用限制，设备要求为6s以上，系统最低要求为iOS11，Xcode版本为9以上
 

@@ -50,6 +50,10 @@ class LineNode: NSObject {
         fatalError("init(coder:) has not been implemented")
     }
     
+    deinit {
+        removeFromParent()
+    }
+    
     public func updatePosition(pos: SCNVector3, camera: ARCamera?) -> Float {
         let posEnd = updateTransform(for: pos, camera: camera)
         
