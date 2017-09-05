@@ -19,6 +19,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     @IBOutlet var distanceLabel_Center: UILabel!
     @IBOutlet var distanceLabel_Right: UILabel!
     @IBOutlet var debugButton: UIButton!
+    @IBOutlet var trashButton: UIButton!
     @IBOutlet var messageLabel: UILabel!
     
     var line: LineNode?
@@ -34,9 +35,10 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         
         setupFocusSquare()
         
-        #if DEBUG
-            debugButton.isHidden = false
-        #endif
+//        #if DEBUG
+//            debugButton.isHidden = false
+//            trashButton.isHidden = true
+//        #endif
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -94,6 +96,15 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         }else{
             planes.values.forEach { $0.showDebugVisualization(showDebugVisuals) }
             sceneView.debugOptions = [ARSCNDebugOptions.showFeaturePoints]
+        }
+    }
+    
+    @IBAction func deleteAction(_ sender: UIButton) {
+        if line != nil {
+            line?.removeFromParent()
+            line = nil
+        }else{
+            lines.last?.removeFromParent()
         }
     }
     

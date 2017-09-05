@@ -18,7 +18,7 @@ Mesure distance using apple ARKit
 You should mesure with enough light to detect feature point.
 
 ## Run
-Because the use of opencv,you should download [opencv-3.2.0](http://opencv.org/releases.html) and replace it yourself or using client that support git-lfs like [Tower](https://www.git-tower.com/mac/) to pull the code.
+Because the use of opencv,you should download [opencv-3.2.0](http://opencv.org/releases.html) and replace it yourself.
 
 ## Instruction
 This project use the methods below to determine start and end point. 

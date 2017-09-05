@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13156.6" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BV1-FR-VrT">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13178.6" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BV1-FR-VrT">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13137.5"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13156.2"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -101,6 +101,17 @@
                                     <action selector="debugAction:" destination="BV1-FR-VrT" eventType="touchUpInside" id="YIX-BO-hfh"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lra-RI-GS1">
+                                <rect key="frame" x="10" y="617" width="40" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="40" id="6cA-vi-2Aq"/>
+                                    <constraint firstAttribute="height" constant="40" id="HoU-2S-C5b"/>
+                                </constraints>
+                                <state key="normal" image="trash"/>
+                                <connections>
+                                    <action selector="deleteAction:" destination="BV1-FR-VrT" eventType="touchUpInside" id="aRI-2D-7mo"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -110,10 +121,12 @@
                             <constraint firstItem="MtD-xF-1bP" firstAttribute="leading" secondItem="hG4-f3-ROa" secondAttribute="leading" id="5pg-Sw-W8G"/>
                             <constraint firstAttribute="trailing" secondItem="UjI-29-B53" secondAttribute="trailing" id="97i-Vc-uSI"/>
                             <constraint firstItem="BsP-LT-0SZ" firstAttribute="top" secondItem="AiG-RV-qJd" secondAttribute="bottom" constant="10" id="C5m-a6-fxF"/>
+                            <constraint firstItem="BsP-LT-0SZ" firstAttribute="top" secondItem="Lra-RI-GS1" secondAttribute="bottom" constant="10" id="Gi1-CQ-1V8"/>
                             <constraint firstItem="BsP-LT-0SZ" firstAttribute="top" secondItem="c8J-K7-OFh" secondAttribute="bottom" constant="80" id="HDb-RR-9EQ"/>
                             <constraint firstAttribute="trailing" secondItem="AiG-RV-qJd" secondAttribute="trailing" constant="10" id="JZr-RZ-mZN"/>
                             <constraint firstItem="UjI-29-B53" firstAttribute="top" secondItem="hG4-f3-ROa" secondAttribute="top" id="QoH-ci-NOw"/>
                             <constraint firstAttribute="trailing" secondItem="MtD-xF-1bP" secondAttribute="trailing" id="diS-f6-KIA"/>
+                            <constraint firstItem="Lra-RI-GS1" firstAttribute="leading" secondItem="hG4-f3-ROa" secondAttribute="leading" constant="10" id="erQ-cc-NhG"/>
                             <constraint firstItem="UjI-29-B53" firstAttribute="leading" secondItem="hG4-f3-ROa" secondAttribute="leading" id="l7s-9f-q4Y"/>
                             <constraint firstItem="MtD-xF-1bP" firstAttribute="top" secondItem="hG4-f3-ROa" secondAttribute="top" id="rda-jH-We9"/>
                             <constraint firstItem="KpI-ZY-u0P" firstAttribute="leading" secondItem="hG4-f3-ROa" secondAttribute="leading" constant="10" id="vAL-nv-6NY"/>
@@ -130,6 +143,7 @@
                         <outlet property="messageLabel" destination="j1n-et-pjf" id="blG-cw-kIL"/>
                         <outlet property="placeButton" destination="c8J-K7-OFh" id="CUs-S6-wn1"/>
                         <outlet property="sceneView" destination="UjI-29-B53" id="HDI-MH-4Kb"/>
+                        <outlet property="trashButton" destination="Lra-RI-GS1" id="pys-Q6-NRM"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SZV-WD-TEh" sceneMemberID="firstResponder"/>
@@ -143,5 +157,6 @@
         <image name="restart" width="20" height="23"/>
         <image name="set" width="48" height="48"/>
         <image name="settings" width="41" height="48"/>
+        <image name="trash" width="25" height="25"/>
     </resources>
 </document>
