@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		308391B61F2F726500AA2EA1 /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 308391B51F2F726500AA2EA1 /* opencv2.framework */; };
 		308882CF1F24B9B000949E66 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 308882D11F24B9B000949E66 /* Localizable.strings */; };
 		30E2EDD31F2F783900C875CE /* PlaneDetector.mm in Sources */ = {isa = PBXBuildFile; fileRef = 30E2EDD21F2F783900C875CE /* PlaneDetector.mm */; };
 		895F684D188E2A3021F0E723 /* Pods_ARuler.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F76EFD303A05753A6C994CE1 /* Pods_ARuler.framework */; };
@@ -103,6 +104,7 @@
 		BEF8B8071F063C6F00084079 /* ARuler */ = {
 			isa = PBXGroup;
 			children = (
+				308391B51F2F726500AA2EA1 /* opencv2.framework */,
 				BEF8B8081F063C6F00084079 /* AppDelegate.swift */,
 				BEF8B80A1F063C6F00084079 /* art.scnassets */,
 				BEF8B80C1F063C6F00084079 /* ViewController.swift */,
