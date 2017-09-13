@@ -7,9 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		308391B61F2F726500AA2EA1 /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 308391B51F2F726500AA2EA1 /* opencv2.framework */; };
 		308882CF1F24B9B000949E66 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 308882D11F24B9B000949E66 /* Localizable.strings */; };
 		30E2EDD31F2F783900C875CE /* PlaneDetector.mm in Sources */ = {isa = PBXBuildFile; fileRef = 30E2EDD21F2F783900C875CE /* PlaneDetector.mm */; };
+		895F684D188E2A3021F0E723 /* Pods_ARuler.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F76EFD303A05753A6C994CE1 /* Pods_ARuler.framework */; };
 		BE7476EB1F46E04D00AD2281 /* ARKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE7476EA1F46E04D00AD2281 /* ARKit.framework */; };
 		BE78540F1F0A5797007545E0 /* LineNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE78540E1F0A5797007545E0 /* LineNode.swift */; };
 		BEC37AAA1F0B8C5300FC4290 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEC37AA91F0B8C3D00FC4290 /* Utilities.swift */; };
@@ -25,7 +25,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		308391B51F2F726500AA2EA1 /* opencv2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = opencv2.framework; sourceTree = "<group>"; };
 		308391B71F2F739F00AA2EA1 /* ARuler-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ARuler-Bridging-Header.h"; sourceTree = "<group>"; };
 		308882CB1F24B87A00949E66 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
 		308882CC1F24B87A00949E66 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
@@ -33,6 +32,7 @@
 		308882D21F24B9B300949E66 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		30E2EDD11F2F783900C875CE /* PlaneDetector.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PlaneDetector.h; sourceTree = "<group>"; };
 		30E2EDD21F2F783900C875CE /* PlaneDetector.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = PlaneDetector.mm; sourceTree = "<group>"; };
+		317A30FAEADAD3D0897AB0A7 /* Pods-ARuler.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ARuler.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ARuler/Pods-ARuler.debug.xcconfig"; sourceTree = "<group>"; };
 		BE7476EA1F46E04D00AD2281 /* ARKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ARKit.framework; path = System/Library/Frameworks/ARKit.framework; sourceTree = SDKROOT; };
 		BE78540E1F0A5797007545E0 /* LineNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineNode.swift; sourceTree = "<group>"; };
 		BEC37AA91F0B8C3D00FC4290 /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
@@ -47,6 +47,8 @@
 		D74115791F16525A00BF7C8C /* PlaneDebugVisualization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaneDebugVisualization.swift; sourceTree = "<group>"; };
 		D741157A1F16525A00BF7C8C /* Plane.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Plane.swift; sourceTree = "<group>"; };
 		D741157B1F16525A00BF7C8C /* FocusSquare.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusSquare.swift; sourceTree = "<group>"; };
+		F76EFD303A05753A6C994CE1 /* Pods_ARuler.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ARuler.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FBB3884CBE4FB331814253C2 /* Pods-ARuler.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ARuler.release.xcconfig"; path = "Pods/Target Support Files/Pods-ARuler/Pods-ARuler.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,17 +57,27 @@
 			buildActionMask = 2147483647;
 			files = (
 				BE7476EB1F46E04D00AD2281 /* ARKit.framework in Frameworks */,
-				308391B61F2F726500AA2EA1 /* opencv2.framework in Frameworks */,
+				895F684D188E2A3021F0E723 /* Pods_ARuler.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1549DC4CCD91FD328AD9C4CA /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				317A30FAEADAD3D0897AB0A7 /* Pods-ARuler.debug.xcconfig */,
+				FBB3884CBE4FB331814253C2 /* Pods-ARuler.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		BE7476E91F46E04D00AD2281 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
 				BE7476EA1F46E04D00AD2281 /* ARKit.framework */,
+				F76EFD303A05753A6C994CE1 /* Pods_ARuler.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -76,6 +88,7 @@
 				BEF8B8071F063C6F00084079 /* ARuler */,
 				BEF8B8061F063C6F00084079 /* Products */,
 				BE7476E91F46E04D00AD2281 /* Frameworks */,
+				1549DC4CCD91FD328AD9C4CA /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -90,7 +103,6 @@
 		BEF8B8071F063C6F00084079 /* ARuler */ = {
 			isa = PBXGroup;
 			children = (
-				308391B51F2F726500AA2EA1 /* opencv2.framework */,
 				BEF8B8081F063C6F00084079 /* AppDelegate.swift */,
 				BEF8B80A1F063C6F00084079 /* art.scnassets */,
 				BEF8B80C1F063C6F00084079 /* ViewController.swift */,
@@ -118,9 +130,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = BEF8B8191F063C6F00084079 /* Build configuration list for PBXNativeTarget "ARuler" */;
 			buildPhases = (
+				32BAD1E1F6ED1F58812D994D /* [CP] Check Pods Manifest.lock */,
 				BEF8B8011F063C6F00084079 /* Sources */,
 				BEF8B8021F063C6F00084079 /* Frameworks */,
 				BEF8B8031F063C6F00084079 /* Resources */,
+				E177C91CBEC3392412E79086 /* [CP] Embed Pods Frameworks */,
+				5DCD755888D68C69E89EF0E0 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -180,6 +195,54 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		32BAD1E1F6ED1F58812D994D /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		5DCD755888D68C69E89EF0E0 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ARuler/Pods-ARuler-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E177C91CBEC3392412E79086 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ARuler/Pods-ARuler-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		BEF8B8011F063C6F00084079 /* Sources */ = {
@@ -337,6 +400,7 @@
 		};
 		BEF8B81A1F063C6F00084079 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 317A30FAEADAD3D0897AB0A7 /* Pods-ARuler.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -358,6 +422,7 @@
 		};
 		BEF8B81B1F063C6F00084079 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = FBB3884CBE4FB331814253C2 /* Pods-ARuler.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
