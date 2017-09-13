@@ -53,6 +53,8 @@ namespace cv
 
 //! @cond IGNORED
 
+CV_CPU_OPTIMIZATION_HAL_NAMESPACE_BEGIN
+
 #define CV_SIMD128 1
 #if defined(__aarch64__)
 #define CV_SIMD128_64F 1
@@ -276,16 +278,28 @@ struct v_float64x2
 };
 #endif
 
-#if defined (HAVE_FP16)
-// Workaround for old comiplers
+#if CV_FP16
+// Workaround for old compilers
 template <typename T> static inline int16x4_t vreinterpret_s16_f16(T a)
 { return (int16x4_t)a; }
 template <typename T> static inline float16x4_t vreinterpret_f16_s16(T a)
 { return (float16x4_t)a; }
-template <typename T> static inline float16x4_t vld1_f16(const T* ptr)
-{ return vreinterpret_f16_s16(vld1_s16((const short*)ptr)); }
-template <typename T> static inline void vst1_f16(T* ptr, float16x4_t a)
-{ vst1_s16((short*)ptr, vreinterpret_s16_f16(a)); }
+template <typename T> static inline float16x4_t cv_vld1_f16(const T* ptr)
+{
+#ifndef vld1_f16 // APPLE compiler defines vld1_f16 as macro
+    return vreinterpret_f16_s16(vld1_s16((const short*)ptr));
+#else
+    return vld1_f16((const __fp16*)ptr);
+#endif
+}
+template <typename T> static inline void cv_vst1_f16(T* ptr, float16x4_t a)
+{
+#ifndef vst1_f16 // APPLE compiler defines vst1_f16 as macro
+    vst1_s16((short*)ptr, vreinterpret_s16_f16(a));
+#else
+    vst1_f16((__fp16*)ptr, a);
+#endif
+}
 
 struct v_float16x4
 {
@@ -297,7 +311,7 @@ struct v_float16x4
     v_float16x4(short v0, short v1, short v2, short v3)
     {
         short v[] = {v0, v1, v2, v3};
-        val = vld1_f16(v);
+        val = cv_vld1_f16(v);
     }
     short get0() const
     {
@@ -773,12 +787,12 @@ OPENCV_HAL_IMPL_NEON_LOADSTORE_OP(v_float32x4, float, f32)
 OPENCV_HAL_IMPL_NEON_LOADSTORE_OP(v_float64x2, double, f64)
 #endif
 
-#if defined (HAVE_FP16)
+#if CV_FP16
 // Workaround for old comiplers
 inline v_float16x4 v_load_f16(const short* ptr)
-{ return v_float16x4(vld1_f16(ptr)); }
+{ return v_float16x4(cv_vld1_f16(ptr)); }
 inline void v_store_f16(short* ptr, v_float16x4& a)
-{ vst1_f16(ptr, a.val); }
+{ cv_vst1_f16(ptr, a.val); }
 #endif
 
 #define OPENCV_HAL_IMPL_NEON_REDUCE_OP_8(_Tpvec, _Tpnvec, scalartype, func, vectorfunc, suffix) \
@@ -812,6 +826,37 @@ OPENCV_HAL_IMPL_NEON_REDUCE_OP_4(v_int32x4, int32x2, int, min, min, s32)
 OPENCV_HAL_IMPL_NEON_REDUCE_OP_4(v_float32x4, float32x2, float, sum, add, f32)
 OPENCV_HAL_IMPL_NEON_REDUCE_OP_4(v_float32x4, float32x2, float, max, max, f32)
 OPENCV_HAL_IMPL_NEON_REDUCE_OP_4(v_float32x4, float32x2, float, min, min, f32)
+
+inline v_float32x4 v_reduce_sum4(const v_float32x4& a, const v_float32x4& b,
+                                 const v_float32x4& c, const v_float32x4& d)
+{
+    float32x4x2_t ab = vtrnq_f32(a.val, b.val);
+    float32x4x2_t cd = vtrnq_f32(c.val, d.val);
+
+    float32x4_t u0 = vaddq_f32(ab.val[0], ab.val[1]); // a0+a1 b0+b1 a2+a3 b2+b3
+    float32x4_t u1 = vaddq_f32(cd.val[0], cd.val[1]); // c0+c1 d0+d1 c2+c3 d2+d3
+
+    float32x4_t v0 = vcombine_f32(vget_low_f32(u0), vget_low_f32(u1));
+    float32x4_t v1 = vcombine_f32(vget_high_f32(u0), vget_high_f32(u1));
+
+    return v_float32x4(vaddq_f32(v0, v1));
+}
+
+#define OPENCV_HAL_IMPL_NEON_POPCOUNT(_Tpvec, cast) \
+inline v_uint32x4 v_popcount(const _Tpvec& a) \
+{ \
+    uint8x16_t t = vcntq_u8(cast(a.val)); \
+    uint16x8_t t0 = vpaddlq_u8(t);  /* 16 -> 8 */ \
+    uint32x4_t t1 = vpaddlq_u16(t0); /* 8 -> 4 */ \
+    return v_uint32x4(t1); \
+}
+
+OPENCV_HAL_IMPL_NEON_POPCOUNT(v_uint8x16, OPENCV_HAL_NOP)
+OPENCV_HAL_IMPL_NEON_POPCOUNT(v_uint16x8, vreinterpretq_u8_u16)
+OPENCV_HAL_IMPL_NEON_POPCOUNT(v_uint32x4, vreinterpretq_u8_u32)
+OPENCV_HAL_IMPL_NEON_POPCOUNT(v_int8x16, vreinterpretq_u8_s8)
+OPENCV_HAL_IMPL_NEON_POPCOUNT(v_int16x8, vreinterpretq_u8_s16)
+OPENCV_HAL_IMPL_NEON_POPCOUNT(v_int32x4, vreinterpretq_u8_s32)
 
 inline int v_signmask(const v_uint8x16& a)
 {
@@ -1205,7 +1250,7 @@ inline v_float64x2 v_cvt_f64_high(const v_float32x4& a)
 }
 #endif
 
-#if defined (HAVE_FP16)
+#if CV_FP16
 inline v_float32x4 v_cvt_f32(const v_float16x4& a)
 {
     return v_float32x4(vcvt_f32_f16(a.val));
@@ -1222,10 +1267,12 @@ inline v_float16x4 v_cvt_f16(const v_float32x4& a)
 //! @brief Check CPU capability of SIMD operation
 static inline bool hasSIMD128()
 {
-    return checkHardwareSupport(CV_CPU_NEON);
+    return (CV_CPU_HAS_SUPPORT_NEON) ? true : false;
 }
 
 //! @}
+
+CV_CPU_OPTIMIZATION_HAL_NAMESPACE_END
 
 //! @endcond
 

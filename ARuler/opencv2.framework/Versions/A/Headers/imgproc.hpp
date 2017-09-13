@@ -198,8 +198,8 @@ int main(int argc, const char *argv[])
 
 The Subdiv2D class described in this section is used to perform various planar subdivision on
 a set of 2D points (represented as vector of Point2f). OpenCV subdivides a plane into triangles
-using the Delaunay’s algorithm, which corresponds to the dual graph of the Voronoi diagram.
-In the figure below, the Delaunay’s triangulation is marked with black lines and the Voronoi
+using the Delaunay's algorithm, which corresponds to the dual graph of the Voronoi diagram.
+In the figure below, the Delaunay's triangulation is marked with black lines and the Voronoi
 diagram with red lines.
 
 ![Delaunay triangulation (black) and Voronoi (red)](pics/delaunay_voronoi.png)
@@ -245,8 +245,8 @@ enum MorphTypes{
                         //!< \f[\texttt{dst} = \mathrm{tophat} ( \texttt{src} , \texttt{element} )= \texttt{src} - \mathrm{open} ( \texttt{src} , \texttt{element} )\f]
     MORPH_BLACKHAT = 6, //!< "black hat"
                         //!< \f[\texttt{dst} = \mathrm{blackhat} ( \texttt{src} , \texttt{element} )= \mathrm{close} ( \texttt{src} , \texttt{element} )- \texttt{src}\f]
-    MORPH_HITMISS  = 7  //!< "hit and miss"
-                        //!<   .- Only supported for CV_8UC1 binary images. Tutorial can be found in [this page](https://web.archive.org/web/20160316070407/http://opencv-code.com/tutorials/hit-or-miss-transform-in-opencv/)
+    MORPH_HITMISS  = 7  //!< "hit or miss"
+                        //!<   .- Only supported for CV_8UC1 binary images. A tutorial can be found in the documentation
 };
 
 //! shape of the structuring element
@@ -416,7 +416,7 @@ enum ConnectedComponentsTypes {
 //! connected components algorithm
 enum ConnectedComponentsAlgorithmsTypes {
     CCL_WU      = 0,  //!< SAUF algorithm for 8-way connectivity, SAUF algorithm for 4-way connectivity
-    CCL_DEFAULT = -1, //!< BBDT algortihm for 8-way connectivity, SAUF algorithm for 4-way connectivity
+    CCL_DEFAULT = -1, //!< BBDT algorithm for 8-way connectivity, SAUF algorithm for 4-way connectivity
     CCL_GRANA   = 1   //!< BBDT algorithm for 8-way connectivity, SAUF algorithm for 4-way connectivity
 };
 
@@ -450,6 +450,20 @@ enum ContourApproximationModes {
     CHAIN_APPROX_TC89_L1   = 3,
     /** applies one of the flavors of the Teh-Chin chain approximation algorithm @cite TehChin89 */
     CHAIN_APPROX_TC89_KCOS = 4
+};
+
+/** @brief Shape matching methods
+
+\f$A\f$ denotes object1,\f$B\f$ denotes object2
+
+\f$\begin{array}{l} m^A_i =  \mathrm{sign} (h^A_i)  \cdot \log{h^A_i} \\ m^B_i =  \mathrm{sign} (h^B_i)  \cdot \log{h^B_i} \end{array}\f$
+
+and \f$h^A_i, h^B_i\f$ are the Hu moments of \f$A\f$ and \f$B\f$ , respectively.
+*/
+enum ShapeMatchModes {
+    CONTOURS_MATCH_I1  =1, //!< \f[I_1(A,B) =  \sum _{i=1...7}  \left |  \frac{1}{m^A_i} -  \frac{1}{m^B_i} \right |\f]
+    CONTOURS_MATCH_I2  =2, //!< \f[I_2(A,B) =  \sum _{i=1...7}  \left | m^A_i - m^B_i  \right |\f]
+    CONTOURS_MATCH_I3  =3  //!< \f[I_3(A,B) =  \max _{i=1...7}  \frac{ \left| m^A_i - m^B_i \right| }{ \left| m^A_i \right| }\f]
 };
 
 //! @} imgproc_shape
@@ -769,8 +783,18 @@ enum ColorConversionCodes {
     COLOR_BayerRG2RGB_EA  = COLOR_BayerBG2BGR_EA,
     COLOR_BayerGR2RGB_EA  = COLOR_BayerGB2BGR_EA,
 
+    //! Demosaicing with alpha channel
+    COLOR_BayerBG2BGRA = 139,
+    COLOR_BayerGB2BGRA = 140,
+    COLOR_BayerRG2BGRA = 141,
+    COLOR_BayerGR2BGRA = 142,
 
-    COLOR_COLORCVT_MAX  = 139
+    COLOR_BayerBG2RGBA = COLOR_BayerRG2BGRA,
+    COLOR_BayerGB2RGBA = COLOR_BayerGR2BGRA,
+    COLOR_BayerRG2RGBA = COLOR_BayerBG2BGRA,
+    COLOR_BayerGR2RGBA = COLOR_BayerGB2BGRA,
+
+    COLOR_COLORCVT_MAX  = 143
 };
 
 /** types of intersection between rectangles
@@ -816,7 +840,7 @@ public:
 };
 
 //! Ballard, D.H. (1981). Generalizing the Hough transform to detect arbitrary shapes. Pattern Recognition 13 (2): 111-122.
-//! Detects position only without traslation and rotation
+//! Detects position only without translation and rotation
 class CV_EXPORTS GeneralizedHoughBallard : public GeneralizedHough
 {
 public:
@@ -830,7 +854,7 @@ public:
 };
 
 //! Guil, N., González-Linares, J.M. and Zapata, E.L. (1999). Bidimensional shape detection using an invariant approach. Pattern Recognition 32 (6): 1025-1038.
-//! Detects position, traslation and rotation
+//! Detects position, translation and rotation
 class CV_EXPORTS GeneralizedHoughGuil : public GeneralizedHough
 {
 public:
@@ -931,7 +955,7 @@ public:
 
     /** @overload
 
-    @param rect – Rectangle that includes all of the 2D points that are to be added to the subdivision.
+    @param rect Rectangle that includes all of the 2D points that are to be added to the subdivision.
 
     The function creates an empty Delaunay subdivision where 2D points can be added using the function
     insert() . All of the points to be added must be within the specified rectangle, otherwise a runtime
@@ -941,14 +965,14 @@ public:
 
     /** @brief Creates a new empty Delaunay subdivision
 
-    @param rect – Rectangle that includes all of the 2D points that are to be added to the subdivision.
+    @param rect Rectangle that includes all of the 2D points that are to be added to the subdivision.
 
      */
     CV_WRAP void initDelaunay(Rect rect);
 
     /** @brief Insert a single point into a Delaunay triangulation.
 
-    @param pt – Point to insert.
+    @param pt Point to insert.
 
     The function inserts a single point into a subdivision and modifies the subdivision topology
     appropriately. If a point with the same coordinates exists already, no new point is added.
@@ -960,7 +984,7 @@ public:
 
     /** @brief Insert multiple points into a Delaunay triangulation.
 
-    @param ptvec – Points to insert.
+    @param ptvec Points to insert.
 
     The function inserts a vector of points into a subdivision and modifies the subdivision topology
     appropriately.
@@ -969,9 +993,9 @@ public:
 
     /** @brief Returns the location of a point within a Delaunay triangulation.
 
-    @param pt – Point to locate.
-    @param edge – Output edge that the point belongs to or is located to the right of it.
-    @param vertex – Optional output vertex the input point coincides with.
+    @param pt Point to locate.
+    @param edge Output edge that the point belongs to or is located to the right of it.
+    @param vertex Optional output vertex the input point coincides with.
 
     The function locates the input point within the subdivision and gives one of the triangle edges
     or vertices.
@@ -984,15 +1008,15 @@ public:
        vertex will contain a pointer to the vertex.
     -  The point is outside the subdivision reference rectangle. The function returns PTLOC_OUTSIDE_RECT
        and no pointers are filled.
-    -  One of input arguments is invalid. A runtime error is raised or, if silent or “parent” error
-       processing mode is selected, CV_PTLOC_ERROR is returnd.
+    -  One of input arguments is invalid. A runtime error is raised or, if silent or "parent" error
+       processing mode is selected, CV_PTLOC_ERROR is returned.
      */
     CV_WRAP int locate(Point2f pt, CV_OUT int& edge, CV_OUT int& vertex);
 
     /** @brief Finds the subdivision vertex closest to the given point.
 
-    @param pt – Input point.
-    @param nearestPt – Output subdivision vertex point.
+    @param pt Input point.
+    @param nearestPt Output subdivision vertex point.
 
     The function is another function that locates the input point within the subdivision. It finds the
     subdivision vertex that is the closest to the input point. It is not necessarily one of vertices
@@ -1005,7 +1029,7 @@ public:
 
     /** @brief Returns a list of all edges.
 
-    @param edgeList – Output vector.
+    @param edgeList Output vector.
 
     The function gives each edge as a 4 numbers vector, where each two are one of the edge
     vertices. i.e. org_x = v[0], org_y = v[1], dst_x = v[2], dst_y = v[3].
@@ -1014,7 +1038,7 @@ public:
 
     /** @brief Returns a list of the leading edge ID connected to each triangle.
 
-    @param leadingEdgeList – Output vector.
+    @param leadingEdgeList Output vector.
 
     The function gives one edge ID for each triangle.
      */
@@ -1022,7 +1046,7 @@ public:
 
     /** @brief Returns a list of all triangles.
 
-    @param triangleList – Output vector.
+    @param triangleList Output vector.
 
     The function gives each triangle as a 6 numbers vector, where each two are one of the triangle
     vertices. i.e. p1_x = v[0], p1_y = v[1], p2_x = v[2], p2_y = v[3], p3_x = v[4], p3_y = v[5].
@@ -1031,9 +1055,9 @@ public:
 
     /** @brief Returns a list of all Voroni facets.
 
-    @param idx – Vector of vertices IDs to consider. For all vertices you can pass empty vector.
-    @param facetList – Output vector of the Voroni facets.
-    @param facetCenters – Output vector of the Voroni facets center points.
+    @param idx Vector of vertices IDs to consider. For all vertices you can pass empty vector.
+    @param facetList Output vector of the Voroni facets.
+    @param facetCenters Output vector of the Voroni facets center points.
 
      */
     CV_WRAP void getVoronoiFacetList(const std::vector<int>& idx, CV_OUT std::vector<std::vector<Point2f> >& facetList,
@@ -1041,8 +1065,8 @@ public:
 
     /** @brief Returns vertex location from vertex ID.
 
-    @param vertex – vertex ID.
-    @param firstEdge – Optional. The first edge ID which is connected to the vertex.
+    @param vertex vertex ID.
+    @param firstEdge Optional. The first edge ID which is connected to the vertex.
     @returns vertex (x,y)
 
      */
@@ -1050,8 +1074,8 @@ public:
 
     /** @brief Returns one of the edges related to the given edge.
 
-    @param edge – Subdivision edge ID.
-    @param nextEdgeType - Parameter specifying which of the related edges to return.
+    @param edge Subdivision edge ID.
+    @param nextEdgeType Parameter specifying which of the related edges to return.
     The following values are possible:
     -   NEXT_AROUND_ORG next around the edge origin ( eOnext on the picture below if e is the input edge)
     -   NEXT_AROUND_DST next around the edge vertex ( eDnext )
@@ -1070,7 +1094,7 @@ public:
 
     /** @brief Returns next edge around the edge origin.
 
-    @param edge – Subdivision edge ID.
+    @param edge Subdivision edge ID.
 
     @returns an integer which is next edge ID around the edge origin: eOnext on the
     picture above if e is the input edge).
@@ -1079,8 +1103,8 @@ public:
 
     /** @brief Returns another edge of the same quad-edge.
 
-    @param edge – Subdivision edge ID.
-    @param rotate - Parameter specifying which of the edges of the same quad-edge as the input
+    @param edge Subdivision edge ID.
+    @param rotate Parameter specifying which of the edges of the same quad-edge as the input
     one to return. The following values are possible:
     -   0 - the input edge ( e on the picture below if e is the input edge)
     -   1 - the rotated edge ( eRot )
@@ -1094,8 +1118,8 @@ public:
 
     /** @brief Returns the edge origin.
 
-    @param edge – Subdivision edge ID.
-    @param orgpt – Output vertex location.
+    @param edge Subdivision edge ID.
+    @param orgpt Output vertex location.
 
     @returns vertex ID.
      */
@@ -1103,8 +1127,8 @@ public:
 
     /** @brief Returns the edge destination.
 
-    @param edge – Subdivision edge ID.
-    @param dstpt – Output vertex location.
+    @param edge Subdivision edge ID.
+    @param dstpt Output vertex location.
 
     @returns vertex ID.
      */
@@ -1203,7 +1227,7 @@ public:
                         OutputArray nfa = noArray()) = 0;
 
     /** @brief Draws the line segments on a given image.
-    @param _image The image, where the liens will be drawn. Should be bigger or equal to the image,
+    @param _image The image, where the lines will be drawn. Should be bigger or equal to the image,
     where the lines were found.
     @param lines A vector of the lines that needed to be drawn.
      */
@@ -1261,7 +1285,7 @@ smoothing kernels (a symmetrical kernel with sum of weights equal to 1) and hand
 You may also use the higher-level GaussianBlur.
 @param ksize Aperture size. It should be odd ( \f$\texttt{ksize} \mod 2 = 1\f$ ) and positive.
 @param sigma Gaussian standard deviation. If it is non-positive, it is computed from ksize as
-`sigma = 0.3\*((ksize-1)\*0.5 - 1) + 0.8`.
+`sigma = 0.3*((ksize-1)*0.5 - 1) + 0.8`.
 @param ktype Type of filter coefficients. It can be CV_32F or CV_64F .
 @sa  sepFilter2D, getDerivKernels, getStructuringElement, GaussianBlur
  */
@@ -1397,7 +1421,7 @@ CV_EXPORTS_W void bilateralFilter( InputArray src, OutputArray dst, int d,
 
 /** @brief Blurs an image using the box filter.
 
-The function smoothes an image using the kernel:
+The function smooths an image using the kernel:
 
 \f[\texttt{K} =  \alpha \begin{bmatrix} 1 & 1 & 1 &  \cdots & 1 & 1  \\ 1 & 1 & 1 &  \cdots & 1 & 1  \\ \hdotsfor{6} \\ 1 & 1 & 1 &  \cdots & 1 & 1 \end{bmatrix}\f]
 
@@ -1449,7 +1473,7 @@ CV_EXPORTS_W void sqrBoxFilter( InputArray _src, OutputArray _dst, int ddepth,
 
 /** @brief Blurs an image using the normalized box filter.
 
-The function smoothes an image using the kernel:
+The function smooths an image using the kernel:
 
 \f[\texttt{K} =  \frac{1}{\texttt{ksize.width*ksize.height}} \begin{bmatrix} 1 & 1 & 1 &  \cdots & 1 & 1  \\ 1 & 1 & 1 &  \cdots & 1 & 1  \\ \hdotsfor{6} \\ 1 & 1 & 1 &  \cdots & 1 & 1  \\ \end{bmatrix}\f]
 
@@ -2157,6 +2181,9 @@ kernel center.
 @param borderValue Border value in case of a constant border. The default value has a special
 meaning.
 @sa  dilate, erode, getStructuringElement
+@note The number of iterations is the number of times erosion or dilatation operation will be applied.
+For instance, an opening operation (#MORPH_OPEN) with two iterations is equivalent to apply
+successively: erode -> erode -> dilate -> dilate (and not erode -> dilate -> erode -> dilate).
  */
 CV_EXPORTS_W void morphologyEx( InputArray src, OutputArray dst,
                                 int op, InputArray kernel,
@@ -2578,9 +2605,8 @@ The function supports multi-channel images. Each channel is processed independen
 The functions accumulate\* can be used, for example, to collect statistics of a scene background
 viewed by a still camera and for the further foreground-background segmentation.
 
-@param src Input image as 1- or 3-channel, 8-bit or 32-bit floating point.
-@param dst %Accumulator image with the same number of channels as input image, 32-bit or 64-bit
-floating-point.
+@param src Input image of type CV_8UC(n), CV_16UC(n), CV_32FC(n) or CV_64FC(n), where n is a positive integer.
+@param dst %Accumulator image with the same number of channels as input image, and a depth of CV_32F or CV_64F.
 @param mask Optional operation mask.
 
 @sa  accumulateSquare, accumulateProduct, accumulateWeighted
@@ -2709,7 +2735,7 @@ CV_EXPORTS_W void createHanningWindow(OutputArray dst, Size winSize, int type);
 
 /** @brief Applies a fixed-level threshold to each array element.
 
-The function applies fixed-level thresholding to a single-channel array. The function is typically
+The function applies fixed-level thresholding to a multiple-channel array. The function is typically
 used to get a bi-level (binary) image out of a grayscale image ( cv::compare could be also used for
 this purpose) or for removing a noise, that is, filtering out pixels with too small or too large
 values. There are several types of thresholding supported by the function. They are determined by
@@ -2721,8 +2747,10 @@ or Triangle algorithm and uses it instead of the specified thresh . The function
 computed threshold value. Currently, the Otsu's and Triangle methods are implemented only for 8-bit
 images.
 
-@param src input array (single-channel, 8-bit or 32-bit floating point).
-@param dst output array of the same size and type as src.
+@note Input image should be single channel only in case of CV_THRESH_OTSU or CV_THRESH_TRIANGLE flags
+
+@param src input array (multiple-channel, 8-bit or 32-bit floating point).
+@param dst output array of the same size  and type and the same number of channels as src.
 @param thresh threshold value.
 @param maxval maximum value to use with the THRESH_BINARY and THRESH_BINARY_INV thresholding
 types.
@@ -2767,6 +2795,9 @@ CV_EXPORTS_W void adaptiveThreshold( InputArray src, OutputArray dst,
 //! @addtogroup imgproc_filter
 //! @{
 
+/** @example Pyramids.cpp
+An example using pyrDown and pyrUp functions
+ */
 /** @brief Blurs an image and downsamples it.
 
 By default, size of the output image is computed as `Size((src.cols+1)/2, (src.rows+1)/2)`, but in
@@ -2920,7 +2951,7 @@ computed by stereoRectify can be passed here. If the matrix is empty, the identi
 is assumed. In cvInitUndistortMap R assumed to be an identity matrix.
 @param newCameraMatrix New camera matrix \f$A'=\vecthreethree{f_x'}{0}{c_x'}{0}{f_y'}{c_y'}{0}{0}{1}\f$.
 @param size Undistorted image size.
-@param m1type Type of the first output map that can be CV_32FC1 or CV_16SC2, see cv::convertMaps
+@param m1type Type of the first output map that can be CV_32FC1, CV_32FC2 or CV_16SC2, see cv::convertMaps
 @param map1 The first output map.
 @param map2 The second output map.
  */
@@ -3255,6 +3286,10 @@ CV_EXPORTS float EMD( InputArray signature1, InputArray signature2,
                       int distType, InputArray cost=noArray(),
                       float* lowerBound = 0, OutputArray flow = noArray() );
 
+CV_EXPORTS_AS(EMD) float wrapperEMD( InputArray signature1, InputArray signature2,
+                      int distType, InputArray cost=noArray(),
+                      CV_IN_OUT Ptr<float> lowerBound = Ptr<float>(), OutputArray flow = noArray() );
+
 //! @} imgproc_hist
 
 /** @example watershed.cpp
@@ -3572,7 +3607,7 @@ CV_EXPORTS_W void cvtColor( InputArray src, OutputArray dst, int code, int dstCn
 
 //! @} imgproc_misc
 
-// main function for all demosaicing procceses
+// main function for all demosaicing processes
 CV_EXPORTS_W void demosaicing(InputArray _src, OutputArray _dst, int code, int dcn = 0);
 
 //! @addtogroup imgproc_shape
@@ -3637,6 +3672,9 @@ enum TemplateMatchModes {
     TM_CCOEFF_NORMED = 5  //!< \f[R(x,y)= \frac{ \sum_{x',y'} (T'(x',y') \cdot I'(x+x',y+y')) }{ \sqrt{\sum_{x',y'}T'(x',y')^2 \cdot \sum_{x',y'} I'(x+x',y+y')^2} }\f]
 };
 
+/** @example MatchTemplate_Demo.cpp
+An example using Template Matching algorithm
+ */
 /** @brief Compares a template against overlapped image regions.
 
 The function slides through image , compares the overlapped patches of size \f$w \times h\f$ against
@@ -3658,7 +3696,7 @@ data type.
 is \f$W \times H\f$ and templ is \f$w \times h\f$ , then result is \f$(W-w+1) \times (H-h+1)\f$ .
 @param method Parameter specifying the comparison method, see cv::TemplateMatchModes
 @param mask Mask of searched template. It must have the same datatype and size with templ. It is
-not set by default.
+not set by default. Currently, only the TM_SQDIFF and TM_CCORR_NORMED methods are supported.
  */
 CV_EXPORTS_W void matchTemplate( InputArray image, InputArray templ,
                                  OutputArray result, int method, InputArray mask = noArray() );
@@ -3674,8 +3712,10 @@ image with 4 or 8 way connectivity - returns N, the total number of labels [0, N
 represents the background label. ltype specifies the output label image type, an important
 consideration based on the total number of labels or alternatively the total number of pixels in
 the source image. ccltype specifies the connected components labeling algorithm to use, currently
-Grana's (BBDT) and Wu's (SAUF) algorithms are supported, see the cv::ConnectedComponentsAlgorithmsTypes
+Grana (BBDT) and Wu's (SAUF) algorithms are supported, see the cv::ConnectedComponentsAlgorithmsTypes
 for details. Note that SAUF algorithm forces a row major ordering of labels while BBDT does not.
+This function uses parallel version of both Grana and Wu's algorithms if at least one allowed
+parallel framework is enabled and if the rows of the image are at least twice the number returned by getNumberOfCPUs.
 
 @param image the 8-bit single-channel image to be labeled
 @param labels destination labeled image
@@ -3706,7 +3746,8 @@ consideration based on the total number of labels or alternatively the total num
 the source image. ccltype specifies the connected components labeling algorithm to use, currently
 Grana's (BBDT) and Wu's (SAUF) algorithms are supported, see the cv::ConnectedComponentsAlgorithmsTypes
 for details. Note that SAUF algorithm forces a row major ordering of labels while BBDT does not.
-
+This function uses parallel version of both Grana and Wu's algorithms (statistics included) if at least one allowed
+parallel framework is enabled and if the rows of the image are at least twice the number returned by getNumberOfCPUs.
 
 @param image the 8-bit single-channel image to be labeled
 @param labels destination labeled image
@@ -3744,6 +3785,7 @@ CV_EXPORTS_W int connectedComponentsWithStats(InputArray image, OutputArray labe
 The function retrieves contours from the binary image using the algorithm @cite Suzuki85 . The contours
 are a useful tool for shape analysis and object detection and recognition. See squares.cpp in the
 OpenCV sample directory.
+@note Since opencv 3.2 source image is not modified by this function.
 
 @param image Source, an 8-bit single-channel image. Non-zero pixels are treated as 1's. Zero
 pixels remain 0's, so the image is treated as binary . You can use cv::compare, cv::inRange, cv::threshold ,
@@ -3753,7 +3795,7 @@ If mode equals to cv::RETR_CCOMP or cv::RETR_FLOODFILL, the input can also be a 
 std::vector<std::vector<cv::Point> >).
 @param hierarchy Optional output vector (e.g. std::vector<cv::Vec4i>), containing information about the image topology. It has
 as many elements as the number of contours. For each i-th contour contours[i], the elements
-hierarchy[i][0] , hiearchy[i][1] , hiearchy[i][2] , and hiearchy[i][3] are set to 0-based indices
+hierarchy[i][0] , hierarchy[i][1] , hierarchy[i][2] , and hierarchy[i][3] are set to 0-based indices
 in contours of the next and previous contours at the same hierarchical level, the first child
 contour and the parent contour, respectively. If for the contour i there are no next, previous,
 parent, or nested contours, the corresponding elements of hierarchy[i] will be negative.
@@ -3903,7 +3945,7 @@ The function compares two shapes. All three implemented methods use the Hu invar
 
 @param contour1 First contour or grayscale image.
 @param contour2 Second contour or grayscale image.
-@param method Comparison method, see ::ShapeMatchModes
+@param method Comparison method, see cv::ShapeMatchModes
 @param parameter Method-specific parameter (not supported now).
  */
 CV_EXPORTS_W double matchShapes( InputArray contour1, InputArray contour2,
@@ -4041,7 +4083,7 @@ CV_EXPORTS_W double pointPolygonTest( InputArray contour, Point2f pt, bool measu
 
 /** @brief Finds out if there is any intersection between two rotated rectangles.
 
-If there is then the vertices of the interesecting region are returned as well.
+If there is then the vertices of the intersecting region are returned as well.
 
 Below are some examples of intersection configurations. The hatched pattern indicates the
 intersecting region and the red vertices are returned by the function.
@@ -4061,14 +4103,20 @@ CV_EXPORTS_W int rotatedRectangleIntersection( const RotatedRect& rect1, const R
 CV_EXPORTS_W Ptr<CLAHE> createCLAHE(double clipLimit = 40.0, Size tileGridSize = Size(8, 8));
 
 //! Ballard, D.H. (1981). Generalizing the Hough transform to detect arbitrary shapes. Pattern Recognition 13 (2): 111-122.
-//! Detects position only without traslation and rotation
+//! Detects position only without translation and rotation
 CV_EXPORTS Ptr<GeneralizedHoughBallard> createGeneralizedHoughBallard();
 
 //! Guil, N., González-Linares, J.M. and Zapata, E.L. (1999). Bidimensional shape detection using an invariant approach. Pattern Recognition 32 (6): 1025-1038.
-//! Detects position, traslation and rotation
+//! Detects position, translation and rotation
 CV_EXPORTS Ptr<GeneralizedHoughGuil> createGeneralizedHoughGuil();
 
-//! Performs linear blending of two images
+//! Performs linear blending of two images:
+//! \f[ \texttt{dst}(i,j) = \texttt{weights1}(i,j)*\texttt{src1}(i,j) + \texttt{weights2}(i,j)*\texttt{src2}(i,j) \f]
+//! @param src1 It has a type of CV_8UC(n) or CV_32FC(n), where n is a positive integer.
+//! @param src2 It has the same type and size as src1.
+//! @param weights1 It has a type of CV_32FC1 and the same size with src1.
+//! @param weights2 It has a type of CV_32FC1 and the same size with src1.
+//! @param dst It is created if it does not have the same size and type with src1.
 CV_EXPORTS void blendLinear(InputArray src1, InputArray src2, InputArray weights1, InputArray weights2, OutputArray dst);
 
 //! @addtogroup imgproc_colormap
@@ -4092,13 +4140,24 @@ enum ColormapTypes
     COLORMAP_PARULA = 12 //!< ![parula](pics/colormaps/colorscale_parula.jpg)
 };
 
+/** @example falsecolor.cpp
+An example using applyColorMap function
+*/
 /** @brief Applies a GNU Octave/MATLAB equivalent colormap on a given image.
 
 @param src The source image, grayscale or colored of type CV_8UC1 or CV_8UC3.
 @param dst The result is the colormapped source image. Note: Mat::create is called on dst.
 @param colormap The colormap to apply, see cv::ColormapTypes
- */
+*/
 CV_EXPORTS_W void applyColorMap(InputArray src, OutputArray dst, int colormap);
+
+/** @brief Applies a user colormap on a given image.
+
+@param src The source image, grayscale or colored of type CV_8UC1 or CV_8UC3.
+@param dst The result is the colormapped source image. Note: Mat::create is called on dst.
+@param userColor The colormap to apply of type CV_8UC1 or CV_8UC3 and size 256
+*/
+CV_EXPORTS_W void applyColorMap(InputArray src, OutputArray dst, InputArray userColor);
 
 //! @} imgproc_colormap
 
@@ -4166,6 +4225,9 @@ CV_EXPORTS void rectangle(CV_IN_OUT Mat& img, Rect rec,
                           const Scalar& color, int thickness = 1,
                           int lineType = LINE_8, int shift = 0);
 
+/** @example Drawing_2.cpp
+An example using drawing functions
+ */
 /** @brief Draws a circle.
 
 The function circle draws a simple or filled circle with a given center and radius.
@@ -4184,14 +4246,16 @@ CV_EXPORTS_W void circle(InputOutputArray img, Point center, int radius,
 
 /** @brief Draws a simple or thick elliptic arc or fills an ellipse sector.
 
-The function cv::ellipse with less parameters draws an ellipse outline, a filled ellipse, an elliptic
-arc, or a filled ellipse sector. A piecewise-linear curve is used to approximate the elliptic arc
+The function cv::ellipse with more parameters draws an ellipse outline, a filled ellipse, an elliptic
+arc, or a filled ellipse sector. The drawing code uses general parametric form.
+A piecewise-linear curve is used to approximate the elliptic arc
 boundary. If you need more control of the ellipse rendering, you can retrieve the curve using
-ellipse2Poly and then render it with polylines or fill it with fillPoly . If you use the first
-variant of the function and want to draw the whole ellipse, not an arc, pass startAngle=0 and
-endAngle=360 . The figure below explains the meaning of the parameters.
+cv::ellipse2Poly and then render it with polylines or fill it with cv::fillPoly. If you use the first
+variant of the function and want to draw the whole ellipse, not an arc, pass `startAngle=0` and
+`endAngle=360`. If `startAngle` is greater than `endAngle`, they are swapped. The figure below explains
+the meaning of the parameters to draw the blue arc.
 
-![Parameters of Elliptic Arc](pics/ellipse.png)
+![Parameters of Elliptic Arc](pics/ellipse.svg)
 
 @param img Image.
 @param center Center of the ellipse.
@@ -4287,6 +4351,9 @@ CV_EXPORTS void fillPoly(Mat& img, const Point** pts,
                          const Scalar& color, int lineType = LINE_8, int shift = 0,
                          Point offset = Point() );
 
+/** @example Drawing_1.cpp
+An example using drawing functions
+ */
 /** @brief Fills the area bounded by one or more polygons.
 
 The function fillPoly fills an area bounded by several polygonal contours. The function can fill
@@ -4431,7 +4498,7 @@ CV_EXPORTS_W bool clipLine(Rect imgRect, CV_OUT CV_IN_OUT Point& pt1, CV_OUT CV_
 /** @brief Approximates an elliptic arc with a polyline.
 
 The function ellipse2Poly computes the vertices of a polyline that approximates the specified
-elliptic arc. It is used by cv::ellipse.
+elliptic arc. It is used by cv::ellipse. If `arcStart` is greater than `arcEnd`, they are swapped.
 
 @param center Center of the arc.
 @param axes Half of the size of the ellipse main axes. See the ellipse for details.

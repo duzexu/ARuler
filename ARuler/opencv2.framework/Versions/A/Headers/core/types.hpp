@@ -301,6 +301,8 @@ public:
     Size_& operator = (const Size_& sz);
     //! the area (width*height)
     _Tp area() const;
+    //! true if empty
+    bool empty() const;
 
     //! conversion of another data type.
     template<typename _Tp2> operator Size_<_Tp2>() const;
@@ -400,6 +402,8 @@ public:
     Size_<_Tp> size() const;
     //! area (width*height) of the rectangle
     _Tp area() const;
+    //! true if empty
+    bool empty() const;
 
     //! conversion to another data type
     template<typename _Tp2> operator Rect_<_Tp2>() const;
@@ -572,7 +576,7 @@ public:
 
 /** @brief Template class for a 4-element vector derived from Vec.
 
-Being derived from Vec\<_Tp, 4\> , Scalar_ and Scalar can be used just as typical 4-element
+Being derived from Vec\<_Tp, 4\> , Scalar\_ and Scalar can be used just as typical 4-element
 vectors. In addition, they can be converted to/from CvScalar . The type Scalar is widely used in
 OpenCV to pass pixel values.
 */
@@ -1040,7 +1044,8 @@ Complex<_Tp> operator / (const Complex<_Tp>& a, const Complex<_Tp>& b)
 template<typename _Tp> static inline
 Complex<_Tp>& operator /= (Complex<_Tp>& a, const Complex<_Tp>& b)
 {
-    return (a = a / b);
+    a = a / b;
+    return a;
 }
 
 template<typename _Tp> static inline
@@ -1592,8 +1597,18 @@ Size_<_Tp>& Size_<_Tp>::operator = (const Size_<_Tp>& sz)
 template<typename _Tp> inline
 _Tp Size_<_Tp>::area() const
 {
-    return width * height;
+    const _Tp result = width * height;
+    CV_DbgAssert(!std::numeric_limits<_Tp>::is_integer
+        || width == 0 || result / width == height); // make sure the result fits in the return value
+    return result;
 }
+
+template<typename _Tp> inline
+bool Size_<_Tp>::empty() const
+{
+    return width <= 0 || height <= 0;
+}
+
 
 template<typename _Tp> static inline
 Size_<_Tp>& operator *= (Size_<_Tp>& a, _Tp b)
@@ -1731,7 +1746,16 @@ Size_<_Tp> Rect_<_Tp>::size() const
 template<typename _Tp> inline
 _Tp Rect_<_Tp>::area() const
 {
-    return width * height;
+    const _Tp result = width * height;
+    CV_DbgAssert(!std::numeric_limits<_Tp>::is_integer
+        || width == 0 || result / width == height); // make sure the result fits in the return value
+    return result;
+}
+
+template<typename _Tp> inline
+bool Rect_<_Tp>::empty() const
+{
+    return width <= 0 || height <= 0;
 }
 
 template<typename _Tp> template<typename _Tp2> inline
@@ -1796,12 +1820,17 @@ Rect_<_Tp>& operator &= ( Rect_<_Tp>& a, const Rect_<_Tp>& b )
 template<typename _Tp> static inline
 Rect_<_Tp>& operator |= ( Rect_<_Tp>& a, const Rect_<_Tp>& b )
 {
-    _Tp x1 = std::min(a.x, b.x);
-    _Tp y1 = std::min(a.y, b.y);
-    a.width = std::max(a.x + a.width, b.x + b.width) - x1;
-    a.height = std::max(a.y + a.height, b.y + b.height) - y1;
-    a.x = x1;
-    a.y = y1;
+    if (a.empty()) {
+        a = b;
+    }
+    else if (!b.empty()) {
+        _Tp x1 = std::min(a.x, b.x);
+        _Tp y1 = std::min(a.y, b.y);
+        a.width = std::max(a.x + a.width, b.x + b.width) - x1;
+        a.height = std::max(a.y + a.height, b.y + b.height) - y1;
+        a.x = x1;
+        a.y = y1;
+    }
     return a;
 }
 

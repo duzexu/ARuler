@@ -462,6 +462,11 @@ public:
      */
     static String getDefaultObjectName(const String& filename);
 
+    /** @brief Returns the current format.
+     * @returns The current format, see FileStorage::Mode
+     */
+    CV_WRAP int getFormat() const;
+
     Ptr<CvFileStorage> fs; //!< the underlying C FileStorage structure
     String elname; //!< the currently written element
     std::vector<char> structs; //!< the stack of written structures
@@ -474,7 +479,7 @@ template<> CV_EXPORTS void DefaultDeleter<CvFileStorage>::operator ()(CvFileStor
 
 The node is used to store each and every element of the file storage opened for reading. When
 XML/YAML file is read, it is first parsed and stored in the memory as a hierarchical collection of
-nodes. Each node can be a “leaf” that is contain a single number or a string, or be a collection of
+nodes. Each node can be a "leaf" that is contain a single number or a string, or be a collection of
 other nodes. There can be named collections (mappings) where each element has a name and it is
 accessed by a name, and ordered collections (sequences) where elements do not have names but rather
 accessed by index. Type of the file node can be determined using FileNode::type method.
@@ -570,9 +575,7 @@ public:
     operator double() const;
     //! returns the node content as text string
     operator String() const;
-#ifndef OPENCV_NOSTL
     operator std::string() const;
-#endif
 
     //! returns pointer to the underlying file node
     CvFileNode* operator *();
@@ -714,6 +717,7 @@ CV_EXPORTS void read(const FileNode& node, int& value, int default_value);
 CV_EXPORTS void read(const FileNode& node, float& value, float default_value);
 CV_EXPORTS void read(const FileNode& node, double& value, double default_value);
 CV_EXPORTS void read(const FileNode& node, String& value, const String& default_value);
+CV_EXPORTS void read(const FileNode& node, std::string& value, const std::string& default_value);
 CV_EXPORTS void read(const FileNode& node, Mat& mat, const Mat& default_mat = Mat() );
 CV_EXPORTS void read(const FileNode& node, SparseMat& mat, const SparseMat& default_mat = SparseMat() );
 CV_EXPORTS void read(const FileNode& node, std::vector<KeyPoint>& keypoints);
@@ -945,10 +949,51 @@ void write(FileStorage& fs, const Scalar_<_Tp>& s )
 }
 
 static inline
+void write(FileStorage& fs, const KeyPoint& kpt )
+{
+    write(fs, kpt.pt.x);
+    write(fs, kpt.pt.y);
+    write(fs, kpt.size);
+    write(fs, kpt.angle);
+    write(fs, kpt.response);
+    write(fs, kpt.octave);
+    write(fs, kpt.class_id);
+}
+
+static inline
+void write(FileStorage& fs, const DMatch& m )
+{
+    write(fs, m.queryIdx);
+    write(fs, m.trainIdx);
+    write(fs, m.imgIdx);
+    write(fs, m.distance);
+}
+
+static inline
 void write(FileStorage& fs, const Range& r )
 {
     write(fs, r.start);
     write(fs, r.end);
+}
+
+static inline
+void write( FileStorage& fs, const std::vector<KeyPoint>& vec )
+{
+    size_t npoints = vec.size();
+    for(size_t i = 0; i < npoints; i++ )
+    {
+        write(fs, vec[i]);
+    }
+}
+
+static inline
+void write( FileStorage& fs, const std::vector<DMatch>& vec )
+{
+    size_t npoints = vec.size();
+    for(size_t i = 0; i < npoints; i++ )
+    {
+        write(fs, vec[i]);
+    }
 }
 
 template<typename _Tp> static inline
@@ -1009,6 +1054,20 @@ void write(FileStorage& fs, const String& name, const Scalar_<_Tp>& s )
 
 static inline
 void write(FileStorage& fs, const String& name, const Range& r )
+{
+    cv::internal::WriteStructContext ws(fs, name, FileNode::SEQ+FileNode::FLOW);
+    write(fs, r);
+}
+
+static inline
+void write(FileStorage& fs, const String& name, const KeyPoint& r )
+{
+    cv::internal::WriteStructContext ws(fs, name, FileNode::SEQ+FileNode::FLOW);
+    write(fs, r);
+}
+
+static inline
+void write(FileStorage& fs, const String& name, const DMatch& r )
 {
     cv::internal::WriteStructContext ws(fs, name, FileNode::SEQ+FileNode::FLOW);
     write(fs, r);
@@ -1094,6 +1153,24 @@ void read( const FileNode& node, std::vector<_Tp>& vec, const std::vector<_Tp>& 
         FileNodeIterator it = node.begin();
         read( it, vec );
     }
+}
+
+static inline
+void read( const FileNode& node, std::vector<KeyPoint>& vec, const std::vector<KeyPoint>& default_value )
+{
+    if(!node.node)
+        vec = default_value;
+    else
+        read(node, vec);
+}
+
+static inline
+void read( const FileNode& node, std::vector<DMatch>& vec, const std::vector<DMatch>& default_value )
+{
+    if(!node.node)
+        vec = default_value;
+    else
+        read(node, vec);
 }
 
 //! @} FileNode
@@ -1186,6 +1263,14 @@ void operator >> (const FileNode& n, std::vector<KeyPoint>& vec)
 {
     read(n, vec);
 }
+
+static inline
+void operator >> (const FileNode& n, KeyPoint& kpt)
+{
+    FileNodeIterator it = n.begin();
+    it >> kpt.pt.x >> kpt.pt.y >> kpt.size >> kpt.angle >> kpt.response >> kpt.octave >> kpt.class_id;
+}
+
 /** @brief Reads DMatch from a file storage.
 */
 //It needs special handling because it contains two types of fields, int & float.
@@ -1193,6 +1278,13 @@ static inline
 void operator >> (const FileNode& n, std::vector<DMatch>& vec)
 {
     read(n, vec);
+}
+
+static inline
+void operator >> (const FileNode& n, DMatch& m)
+{
+    FileNodeIterator it = n.begin();
+    it >> m.queryIdx >> m.trainIdx >> m.imgIdx >> m.distance;
 }
 
 //! @} FileNode

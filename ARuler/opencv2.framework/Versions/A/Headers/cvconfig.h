@@ -1,5 +1,14 @@
+#ifndef OPENCV_CVCONFIG_H_INCLUDED
+#define OPENCV_CVCONFIG_H_INCLUDED
+
 /* OpenCV compiled as static or dynamic libs */
 /* #undef BUILD_SHARED_LIBS */
+
+/* OpenCV intrinsics optimized code */
+#define CV_ENABLE_INTRINSICS
+
+/* OpenCV additional optimized code */
+/* #undef CV_DISABLE_OPTIMIZATION */
 
 /* Compile for 'real' NVIDIA GPU architectures */
 #define CUDA_ARCH_BIN ""
@@ -83,6 +92,9 @@
 /* GTK+ 2.x toolkit */
 /* #undef HAVE_GTK */
 
+/* Halide support */
+/* #undef HAVE_HALIDE */
+
 /* Define to 1 if you have the <inttypes.h> header file. */
 /* #undef HAVE_INTTYPES_H */
 
@@ -92,6 +104,7 @@
 /* Intel Integrated Performance Primitives */
 /* #undef HAVE_IPP */
 /* #undef HAVE_IPP_ICV_ONLY */
+/* #undef HAVE_IPP_IW */
 
 /* Intel IPP Async */
 /* #undef HAVE_IPP_A */
@@ -195,14 +208,41 @@
 /* Intel VA-API/OpenCL */
 /* #undef HAVE_VA_INTEL */
 
+/* Intel Media SDK */
+/* #undef HAVE_MFX */
+
 /* Lapack */
 /* #undef HAVE_LAPACK */
-
-/* FP16 */
-/* #undef HAVE_FP16 */
 
 /* Library was compiled with functions instrumentation */
 /* #undef ENABLE_INSTRUMENTATION */
 
 /* OpenVX */
 /* #undef HAVE_OPENVX */
+
+#if defined(HAVE_XINE)         || \
+    defined(HAVE_GSTREAMER)    || \
+    defined(HAVE_QUICKTIME)    || \
+    defined(HAVE_QTKIT)        || \
+    defined(HAVE_AVFOUNDATION) || \
+    /*defined(HAVE_OPENNI)     || too specialized */ \
+    defined(HAVE_FFMPEG)       || \
+    defined(HAVE_MSMF)
+#define HAVE_VIDEO_INPUT
+#endif
+
+#if /*defined(HAVE_XINE)       || */\
+    defined(HAVE_GSTREAMER)    || \
+    defined(HAVE_QUICKTIME)    || \
+    defined(HAVE_QTKIT)        || \
+    defined(HAVE_AVFOUNDATION) || \
+    defined(HAVE_FFMPEG)       || \
+    defined(HAVE_MSMF)
+#define HAVE_VIDEO_OUTPUT
+#endif
+
+/* OpenCV trace utilities */
+#define OPENCV_TRACE
+
+
+#endif // OPENCV_CVCONFIG_H_INCLUDED
