@@ -105,6 +105,9 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             line = nil
         }else{
             lines.last?.removeFromParent()
+            if lines.last != nil {
+                lines.removeLast()
+            }
         }
     }
     

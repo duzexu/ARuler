@@ -11,7 +11,7 @@ Mesure distance using apple ARKit
   <img src="./Design/preview_vertical.gif" width="320"/>
   
 ## 运行
-因为使用的opencv库有140m，超过了github的100m上传限制，所以使用了git-lfs，建议自己下载[opencv-3.2.0](http://opencv.org/releases.html)的包替换下
+cd到工程目录下，运行`pod install`
 
 ## 安装
 因为ARKit使用限制，设备要求为6s以上，系统最低要求为iOS11，Xcode版本为9以上
