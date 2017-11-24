@@ -1,3 +1,2 @@
-ARuler/opencv2.framework/Versions/A/opencv2 filter=lfs diff=lfs merge=lfs -text
 *.h linguist-language=swift
 *.hpp linguist-language=swift
