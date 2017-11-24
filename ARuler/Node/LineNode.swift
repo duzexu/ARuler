@@ -15,10 +15,11 @@ class LineNode: NSObject {
     var endNode: SCNNode!
     var lineNode: SCNNode?
     var textNode: SCNNode!
+    var textWrapNode: SCNNode!
     
     let sceneView: ARSCNView?
     
-    init(startPos: SCNVector3, sceneV: ARSCNView) {
+    init(startPos: SCNVector3, sceneV: ARSCNView, cameraNode:SCNNode) {
         sceneView = sceneV
         
         let dot = SCNSphere(radius:1)
@@ -44,6 +45,13 @@ class LineNode: NSObject {
         text.firstMaterial?.isDoubleSided = true
         textNode = SCNNode(geometry: text)
         textNode.scale = SCNVector3(1/500.0, 1/500.0, 1/500.0)
+        textNode.eulerAngles = SCNVector3Make(0, .pi, 0)
+        
+        textWrapNode = SCNNode()
+        textWrapNode.addChildNode(textNode)
+        let constraint = SCNLookAtConstraint(target: cameraNode)
+        constraint.isGimbalLockEnabled = true
+        textWrapNode.constraints = [constraint]
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -69,9 +77,10 @@ class LineNode: NSObject {
         let length = posEnd.distanceFromPos(pos: startNode.position)
         text.string = String(format: "%.2fcm", length*Float.LengthUnit.CentiMeter.rate.0)
         textNode.setPivot()
-        textNode.position = middle
-        if textNode.parent == nil {
-            sceneView?.scene.rootNode.addChildNode(textNode)
+        textWrapNode.position = middle
+        
+        if textWrapNode.parent == nil {
+            sceneView?.scene.rootNode.addChildNode(textWrapNode)
         }
         
         lineNode?.removeFromParentNode()
@@ -85,7 +94,7 @@ class LineNode: NSObject {
         startNode.removeFromParentNode()
         endNode.removeFromParentNode()
         lineNode?.removeFromParentNode()
-        textNode.removeFromParentNode()
+        textWrapNode.removeFromParentNode()
     }
     
     // MARK: - Private
@@ -95,10 +104,10 @@ class LineNode: NSObject {
         let positionData = NSData(bytes: positions, length: MemoryLayout<Float32>.size*positions.count)
         let indices: [Int32] = [0, 1]
         let indexData = NSData(bytes: indices, length: MemoryLayout<Int32>.size * indices.count)
-        
+
         let source = SCNGeometrySource(data: positionData as Data, semantic: SCNGeometrySource.Semantic.vertex, vectorCount: indices.count, usesFloatComponents: true, componentsPerVector: 3, bytesPerComponent: MemoryLayout<Float32>.size, dataOffset: 0, dataStride: MemoryLayout<Float32>.size * 3)
         let element = SCNGeometryElement(data: indexData as Data, primitiveType: SCNGeometryPrimitiveType.line, primitiveCount: indices.count, bytesPerIndex: MemoryLayout<Int32>.size)
-        
+
         let line = SCNGeometry(sources: [source], elements: [element])
         return SCNNode(geometry: line)
     }
@@ -131,7 +140,7 @@ class LineNode: NSObject {
             default:
                 angle = yaw
             }
-            textNode.runAction(SCNAction.rotateTo(x: 0, y: CGFloat(angle), z: 0, duration: 0))
+            //textNode.runAction(SCNAction.rotateTo(x: 0, y: CGFloat(angle), z: 0, duration: 0))
         }
         
         // move to average of recent positions to avoid jitter

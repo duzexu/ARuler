@@ -7,13 +7,23 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		308391B61F2F726500AA2EA1 /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 308391B51F2F726500AA2EA1 /* opencv2.framework */; };
 		308882CF1F24B9B000949E66 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 308882D11F24B9B000949E66 /* Localizable.strings */; };
+		30B9DBA91F77B63100304FEF /* DonateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30B9DBA81F77B63100304FEF /* DonateViewController.swift */; };
+		30B9DBAC1F77BB7C00304FEF /* wx.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 30B9DBAA1F77BA7B00304FEF /* wx.jpg */; };
+		30B9DBAD1F77BB7E00304FEF /* zfb.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 30B9DBAB1F77BA7D00304FEF /* zfb.jpg */; };
 		30E2EDD31F2F783900C875CE /* PlaneDetector.mm in Sources */ = {isa = PBXBuildFile; fileRef = 30E2EDD21F2F783900C875CE /* PlaneDetector.mm */; };
-		895F684D188E2A3021F0E723 /* Pods_ARuler.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F76EFD303A05753A6C994CE1 /* Pods_ARuler.framework */; };
-		BE7476EB1F46E04D00AD2281 /* ARKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE7476EA1F46E04D00AD2281 /* ARKit.framework */; };
+		BE68D2D21F9743DE002477AF /* ARKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE7476EA1F46E04D00AD2281 /* ARKit.framework */; };
+		BE68D2D31F97444A002477AF /* Pods_ARuler.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE68D2D41F97444A002477AF /* Pods_ARuler.framework */; };
 		BE78540F1F0A5797007545E0 /* LineNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE78540E1F0A5797007545E0 /* LineNode.swift */; };
 		BEC37AAA1F0B8C5300FC4290 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEC37AA91F0B8C3D00FC4290 /* Utilities.swift */; };
+		BEC8F07F1F73ABC600EEE6F2 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEC8F07E1F73ABC600EEE6F2 /* SettingViewController.swift */; };
+		BEC8F0811F73B72500EEE6F2 /* UIColorExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEC8F0801F73B72500EEE6F2 /* UIColorExt.swift */; };
+		BEC8F0831F73D37200EEE6F2 /* SupportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEC8F0821F73D37200EEE6F2 /* SupportViewController.swift */; };
+		BEC8F0861F74AE8000EEE6F2 /* R.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEC8F0851F74AE8000EEE6F2 /* R.generated.swift */; };
+		BEC8F0881F74E2CA00EEE6F2 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEC8F0871F74E2CA00EEE6F2 /* WebViewController.swift */; };
+		BEC8F08A1F74F0C300EEE6F2 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEC8F0891F74F0C300EEE6F2 /* AboutViewController.swift */; };
+		BEC8F08C1F74F41200EEE6F2 /* LicenseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEC8F08B1F74F41200EEE6F2 /* LicenseViewController.swift */; };
+		BEC8F08E1F78E64300EEE6F2 /* QuestionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEC8F08D1F78E64300EEE6F2 /* QuestionViewController.swift */; };
 		BEF8B8091F063C6F00084079 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF8B8081F063C6F00084079 /* AppDelegate.swift */; };
 		BEF8B80B1F063C6F00084079 /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = BEF8B80A1F063C6F00084079 /* art.scnassets */; };
 		BEF8B80D1F063C6F00084079 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF8B80C1F063C6F00084079 /* ViewController.swift */; };
@@ -28,15 +38,27 @@
 /* Begin PBXFileReference section */
 		308391B71F2F739F00AA2EA1 /* ARuler-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ARuler-Bridging-Header.h"; sourceTree = "<group>"; };
 		308882CB1F24B87A00949E66 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
-		308882CC1F24B87A00949E66 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
 		308882D01F24B9B000949E66 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		308882D21F24B9B300949E66 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		30B9DBA81F77B63100304FEF /* DonateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DonateViewController.swift; sourceTree = "<group>"; };
+		30B9DBAA1F77BA7B00304FEF /* wx.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = wx.jpg; sourceTree = "<group>"; };
+		30B9DBAB1F77BA7D00304FEF /* zfb.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = zfb.jpg; sourceTree = "<group>"; };
 		30E2EDD11F2F783900C875CE /* PlaneDetector.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PlaneDetector.h; sourceTree = "<group>"; };
 		30E2EDD21F2F783900C875CE /* PlaneDetector.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = PlaneDetector.mm; sourceTree = "<group>"; };
 		317A30FAEADAD3D0897AB0A7 /* Pods-ARuler.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ARuler.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ARuler/Pods-ARuler.debug.xcconfig"; sourceTree = "<group>"; };
+		BE68D2D41F97444A002477AF /* Pods_ARuler.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Pods_ARuler.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BE7476EA1F46E04D00AD2281 /* ARKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ARKit.framework; path = System/Library/Frameworks/ARKit.framework; sourceTree = SDKROOT; };
 		BE78540E1F0A5797007545E0 /* LineNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineNode.swift; sourceTree = "<group>"; };
 		BEC37AA91F0B8C3D00FC4290 /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
+		BEC8F07A1F735F3800EEE6F2 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main.strings; sourceTree = "<group>"; };
+		BEC8F07E1F73ABC600EEE6F2 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
+		BEC8F0801F73B72500EEE6F2 /* UIColorExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorExt.swift; sourceTree = "<group>"; };
+		BEC8F0821F73D37200EEE6F2 /* SupportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupportViewController.swift; sourceTree = "<group>"; };
+		BEC8F0851F74AE8000EEE6F2 /* R.generated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = R.generated.swift; sourceTree = SOURCE_ROOT; };
+		BEC8F0871F74E2CA00EEE6F2 /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
+		BEC8F0891F74F0C300EEE6F2 /* AboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
+		BEC8F08B1F74F41200EEE6F2 /* LicenseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LicenseViewController.swift; sourceTree = "<group>"; };
+		BEC8F08D1F78E64300EEE6F2 /* QuestionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionViewController.swift; sourceTree = "<group>"; };
 		BEF8B8051F063C6F00084079 /* ARuler.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ARuler.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BEF8B8081F063C6F00084079 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BEF8B80A1F063C6F00084079 /* art.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = art.scnassets; sourceTree = "<group>"; };
@@ -57,8 +79,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BE7476EB1F46E04D00AD2281 /* ARKit.framework in Frameworks */,
-				895F684D188E2A3021F0E723 /* Pods_ARuler.framework in Frameworks */,
+				BE68D2D31F97444A002477AF /* Pods_ARuler.framework in Frameworks */,
+				BE68D2D21F9743DE002477AF /* ARKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -77,10 +99,60 @@
 		BE7476E91F46E04D00AD2281 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				BE68D2D41F97444A002477AF /* Pods_ARuler.framework */,
 				BE7476EA1F46E04D00AD2281 /* ARKit.framework */,
 				F76EFD303A05753A6C994CE1 /* Pods_ARuler.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		BE8322E71FC80AB90028007C /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+				BEF8B8111F063C6F00084079 /* Assets.xcassets */,
+				BEF8B80A1F063C6F00084079 /* art.scnassets */,
+				30B9DBAA1F77BA7B00304FEF /* wx.jpg */,
+				30B9DBAB1F77BA7D00304FEF /* zfb.jpg */,
+				308882D11F24B9B000949E66 /* Localizable.strings */,
+			);
+			path = Resource;
+			sourceTree = "<group>";
+		};
+		BE8322E81FC80B020028007C /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				BEF8B80C1F063C6F00084079 /* ViewController.swift */,
+				BEC8F07E1F73ABC600EEE6F2 /* SettingViewController.swift */,
+				BEC8F08D1F78E64300EEE6F2 /* QuestionViewController.swift */,
+				BEC8F0821F73D37200EEE6F2 /* SupportViewController.swift */,
+				30B9DBA81F77B63100304FEF /* DonateViewController.swift */,
+				BEC8F0891F74F0C300EEE6F2 /* AboutViewController.swift */,
+				BEC8F08B1F74F41200EEE6F2 /* LicenseViewController.swift */,
+				BEC8F0871F74E2CA00EEE6F2 /* WebViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		BE8322E91FC80B260028007C /* Node */ = {
+			isa = PBXGroup;
+			children = (
+				BE78540E1F0A5797007545E0 /* LineNode.swift */,
+				D741157B1F16525A00BF7C8C /* FocusSquare.swift */,
+				D741157A1F16525A00BF7C8C /* Plane.swift */,
+				D74115791F16525A00BF7C8C /* PlaneDebugVisualization.swift */,
+			);
+			path = Node;
+			sourceTree = "<group>";
+		};
+		BE8322EA1FC80B400028007C /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				BEC37AA91F0B8C3D00FC4290 /* Utilities.swift */,
+				BEC8F0801F73B72500EEE6F2 /* UIColorExt.swift */,
+				30E2EDD11F2F783900C875CE /* PlaneDetector.h */,
+				30E2EDD21F2F783900C875CE /* PlaneDetector.mm */,
+			);
+			path = Utils;
 			sourceTree = "<group>";
 		};
 		BEF8B7FC1F063C6F00084079 = {
@@ -104,22 +176,15 @@
 		BEF8B8071F063C6F00084079 /* ARuler */ = {
 			isa = PBXGroup;
 			children = (
-				308391B51F2F726500AA2EA1 /* opencv2.framework */,
+				BEC8F0851F74AE8000EEE6F2 /* R.generated.swift */,
 				BEF8B8081F063C6F00084079 /* AppDelegate.swift */,
-				BEF8B80A1F063C6F00084079 /* art.scnassets */,
-				BEF8B80C1F063C6F00084079 /* ViewController.swift */,
-				BE78540E1F0A5797007545E0 /* LineNode.swift */,
-				D741157B1F16525A00BF7C8C /* FocusSquare.swift */,
-				D741157A1F16525A00BF7C8C /* Plane.swift */,
-				D74115791F16525A00BF7C8C /* PlaneDebugVisualization.swift */,
-				BEC37AA91F0B8C3D00FC4290 /* Utilities.swift */,
-				30E2EDD11F2F783900C875CE /* PlaneDetector.h */,
-				30E2EDD21F2F783900C875CE /* PlaneDetector.mm */,
+				BE8322E81FC80B020028007C /* ViewController */,
+				BE8322E91FC80B260028007C /* Node */,
+				BE8322EA1FC80B400028007C /* Utils */,
+				BE8322E71FC80AB90028007C /* Resource */,
 				BEF8B80E1F063C6F00084079 /* Main.storyboard */,
-				BEF8B8111F063C6F00084079 /* Assets.xcassets */,
 				BEF8B8131F063C6F00084079 /* LaunchScreen.storyboard */,
 				BEF8B8161F063C6F00084079 /* Info.plist */,
-				308882D11F24B9B000949E66 /* Localizable.strings */,
 				308391B71F2F739F00AA2EA1 /* ARuler-Bridging-Header.h */,
 			);
 			path = ARuler;
@@ -133,6 +198,7 @@
 			buildConfigurationList = BEF8B8191F063C6F00084079 /* Build configuration list for PBXNativeTarget "ARuler" */;
 			buildPhases = (
 				32BAD1E1F6ED1F58812D994D /* [CP] Check Pods Manifest.lock */,
+				BEC8F0841F73D7CD00EEE6F2 /* R.swift */,
 				BEF8B8011F063C6F00084079 /* Sources */,
 				BEF8B8021F063C6F00084079 /* Frameworks */,
 				BEF8B8031F063C6F00084079 /* Resources */,
@@ -190,7 +256,9 @@
 			files = (
 				308882CF1F24B9B000949E66 /* Localizable.strings in Resources */,
 				BEF8B80B1F063C6F00084079 /* art.scnassets in Resources */,
+				30B9DBAC1F77BB7C00304FEF /* wx.jpg in Resources */,
 				BEF8B8151F063C6F00084079 /* LaunchScreen.storyboard in Resources */,
+				30B9DBAD1F77BB7E00304FEF /* zfb.jpg in Resources */,
 				BEF8B8121F063C6F00084079 /* Assets.xcassets in Resources */,
 				BEF8B8101F063C6F00084079 /* Main.storyboard in Resources */,
 			);
@@ -211,7 +279,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		5DCD755888D68C69E89EF0E0 /* [CP] Copy Pods Resources */ = {
@@ -228,6 +296,20 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ARuler/Pods-ARuler-resources.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		BEC8F0841F73D7CD00EEE6F2 /* R.swift */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = R.swift;
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"$PODS_ROOT/R.swift/rswift\" -p \"$SRCROOT/ARuler.xcodeproj\" \"$SRCROOT\"";
 		};
 		E177C91CBEC3392412E79086 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -252,13 +334,22 @@
 			buildActionMask = 2147483647;
 			files = (
 				BEC37AAA1F0B8C5300FC4290 /* Utilities.swift in Sources */,
+				BEC8F08C1F74F41200EEE6F2 /* LicenseViewController.swift in Sources */,
 				BEF8B80D1F063C6F00084079 /* ViewController.swift in Sources */,
+				BEC8F0831F73D37200EEE6F2 /* SupportViewController.swift in Sources */,
 				BEF8B8091F063C6F00084079 /* AppDelegate.swift in Sources */,
+				BEC8F0811F73B72500EEE6F2 /* UIColorExt.swift in Sources */,
 				BE78540F1F0A5797007545E0 /* LineNode.swift in Sources */,
 				30E2EDD31F2F783900C875CE /* PlaneDetector.mm in Sources */,
+				BEC8F08E1F78E64300EEE6F2 /* QuestionViewController.swift in Sources */,
+				BEC8F07F1F73ABC600EEE6F2 /* SettingViewController.swift in Sources */,
 				D741157D1F16527500BF7C8C /* Plane.swift in Sources */,
 				D741157E1F16527500BF7C8C /* PlaneDebugVisualization.swift in Sources */,
+				BEC8F08A1F74F0C300EEE6F2 /* AboutViewController.swift in Sources */,
 				D741157C1F16527500BF7C8C /* FocusSquare.swift in Sources */,
+				BEC8F0881F74E2CA00EEE6F2 /* WebViewController.swift in Sources */,
+				BEC8F0861F74AE8000EEE6F2 /* R.generated.swift in Sources */,
+				30B9DBA91F77B63100304FEF /* DonateViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -279,6 +370,7 @@
 			children = (
 				BEF8B80F1F063C6F00084079 /* Base */,
 				308882CB1F24B87A00949E66 /* zh-Hans */,
+				BEC8F07A1F735F3800EEE6F2 /* en */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -287,7 +379,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				BEF8B8141F063C6F00084079 /* Base */,
-				308882CC1F24B87A00949E66 /* zh-Hans */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -412,8 +503,9 @@
 					"$(PROJECT_DIR)/ARuler",
 				);
 				INFOPLIST_FILE = ARuler/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.duzexu.www.ARuler;
+				PRODUCT_BUNDLE_IDENTIFIER = com.zexu.ARuler;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "ARuler/ARuler-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -434,8 +526,9 @@
 					"$(PROJECT_DIR)/ARuler",
 				);
 				INFOPLIST_FILE = ARuler/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.duzexu.www.ARuler;
+				PRODUCT_BUNDLE_IDENTIFIER = com.zexu.ARuler;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "ARuler/ARuler-Bridging-Header.h";
 				SWIFT_VERSION = 4.0;

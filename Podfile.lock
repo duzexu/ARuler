@@ -1,14 +1,46 @@
 PODS:
-  - OpenCV (3.2.0):
-    - OpenCV/Dynamic (= 3.2.0)
-  - OpenCV/Dynamic (3.2.0)
+  - AVOSCloud (7.2.0)
+  - AwesomeIntroGuideView (1.0.8):
+    - MGJRouter
+  - LeanCloudFeedback (0.1.1):
+    - AVOSCloud
+  - MGJRouter (0.9.3)
+  - OpenCV (3.1.0.1)
+  - PKHUD (4.2.3)
+  - R.swift (3.3.0):
+    - R.swift.Library (~> 3.0.2)
+  - R.swift.Library (3.0.2)
+  - SnapKit (4.0.0)
 
 DEPENDENCIES:
-  - OpenCV
+  - AwesomeIntroGuideView
+  - LeanCloudFeedback
+  - OpenCV (= 3.1.0.1)
+  - PKHUD (from `https://github.com/pkluz/PKHUD.git`, branch `release/swift4`)
+  - R.swift
+  - SnapKit (~> 4.0.0)
+
+EXTERNAL SOURCES:
+  PKHUD:
+    :branch: release/swift4
+    :git: https://github.com/pkluz/PKHUD.git
+
+CHECKOUT OPTIONS:
+  PKHUD:
+    :commit: 4d8fbf70ae912dd72280cde0a5c1440ada9a7306
+    :git: https://github.com/pkluz/PKHUD.git
 
 SPEC CHECKSUMS:
-  OpenCV: 0f7ab403d1e81769bc6f4f524c3c6928ecb1fdb8
+  AVOSCloud: 9f09a2a734fe980685866feded7f6129141e9336
+  AwesomeIntroGuideView: 1fbde0580a947556fadc60c44f449e9c3426626a
+  LeanCloudFeedback: 686305ea196931c7eae49800c384e42d78408482
+  MGJRouter: f65821e2aeffc8f9e84b254c8f1c0dd80f048aa9
+  OpenCV: 41c4250e2b06a394d6fbb634b5fa622cdd846018
+  PKHUD: 351011b853e6b942e7ee8ad335864cc84c787241
+  R.swift: bde9704d50ff36820f49e266bc88ef545e1e9b36
+  R.swift.Library: fbdec16c9802ad104fc1ba53415dc190e6ec5c73
+  SnapKit: a42d492c16e80209130a3379f73596c3454b7694
 
-PODFILE CHECKSUM: 836b40d53050bc22e6e735d055c0299793c65da7
+PODFILE CHECKSUM: 872d6a53329105aa255f8f7fbb8a1ab4c452a97b
 
-COCOAPODS: 1.2.1
+COCOAPODS: 1.2.0

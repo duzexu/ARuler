@@ -412,7 +412,10 @@ extension Float {
                 return (3.0, "尺")
             }
         }
-        
+    }
+    
+    static var unit: Array<LengthUnit> {
+        return [.CentiMeter,.Meter,.Foot,.Inch,.Ruler]
     }
 }
 
@@ -420,18 +423,29 @@ extension ARCamera.TrackingState {
     var presentationString: String {
         switch self {
         case .notAvailable:
-            return "TRACKING UNAVAILABLE"
+            return "设备不支持"
         case .normal:
             return "TRACKING NORMAL"
         case .limited(let reason):
             switch reason {
             case .excessiveMotion:
-                return "TRACKING LIMITED\nToo much camera movement"
+                return "设备移动过快\n请缓慢移动"
             case .insufficientFeatures:
-                return "TRACKING LIMITED\nNot enough surface detail"
+                return "特征点过少\n请保证摄像头不被遮挡和环境光线充足"
             case .initializing:
-                return "TRACKING LIMITED\nInitialization in progress"
+                return "AR正在初始化\n请左右移动设备获取更多特征点"
             }
+        }
+    }
+}
+
+extension ARError.Code {
+    var presentationString: String {
+        switch self {
+        case .unsupportedConfiguration,.sensorUnavailable,.sensorFailed,.worldTrackingFailed:
+            return "很遗憾，您当前的设备不支持"
+        case .cameraUnauthorized:
+            return "相机开启失败\n请到设置页面打开相机权限"
         }
     }
 }
@@ -487,7 +501,7 @@ extension ARSCNView {
 	func hitTestWithFeatures(_ point: CGPoint, coneOpeningAngleInDegrees: Float,
 	                         minDistance: Float = 0,
 	                         maxDistance: Float = Float.greatestFiniteMagnitude,
-	                         maxResults: Int = 40) -> [FeatureHitTestResult] {
+	                         maxResults: Int = Int.max) -> [FeatureHitTestResult] {
 		
 		var results = [FeatureHitTestResult]()
 		
@@ -568,7 +582,6 @@ extension ARSCNView {
 		if let result = self.hitTestFromOrigin(origin: ray.origin, direction: ray.direction) {
 			results.append(result)
 		}
-		
 		return results
 	}
 	
@@ -577,36 +590,49 @@ extension ARSCNView {
 		guard let features = self.session.currentFrame?.rawFeaturePoints else {
 			return nil
 		}
-		
-		let points = features.__points
-		
-		// Determine the point from the whole point cloud which is closest to the hit test ray.
-		var closestFeaturePoint = origin
-		var minDistance = Float.greatestFiniteMagnitude
-		
-		for i in 0...features.__count {
-			let feature = points.advanced(by: Int(i))
-			let featurePos = SCNVector3(feature.pointee)
-			
-			let originVector = origin - featurePos
-			let crossProduct = originVector.cross(direction)
-			let featureDistanceFromResult = crossProduct.length()
-
-			if featureDistanceFromResult < minDistance {
-				closestFeaturePoint = featurePos
-				minDistance = featureDistanceFromResult
-			}
-		}
-		
-		// Compute the point along the ray that is closest to the selected feature.
-		let originToFeature = closestFeaturePoint - origin
-		let hitTestResult = origin + (direction * direction.dot(originToFeature))
-		let hitTestResultDistance = (hitTestResult - origin).length()
         
-		return FeatureHitTestResult(position: hitTestResult,
-		                            distanceToRayOrigin: hitTestResultDistance,
-		                            featureHit: closestFeaturePoint,
-		                            featureDistanceToHitResult: minDistance)
+        let points = fliterWithFeatures(features.points)
+        guard points.isEmpty else {
+            return nil
+        }
+        let point = points.average
+        let originToFeature = point! - origin
+        let hitTestResult = origin + (direction * direction.dot(originToFeature))
+        let hitTestResultDistance = (hitTestResult - origin).length()
+        return FeatureHitTestResult(position: hitTestResult,
+                                    distanceToRayOrigin: hitTestResultDistance,
+                                    featureHit: point!,
+                                    featureDistanceToHitResult: hitTestResultDistance)
+		
+//        let points = features.__points
+//
+//        // Determine the point from the whole point cloud which is closest to the hit test ray.
+//        var closestFeaturePoint = origin
+//        var minDistance = Float.greatestFiniteMagnitude
+//
+//        for i in 0...features.__count {
+//            let feature = points.advanced(by: Int(i))
+//            let featurePos = SCNVector3(feature.pointee)
+//
+//            let originVector = origin - featurePos
+//            let crossProduct = originVector.cross(direction)
+//            let featureDistanceFromResult = crossProduct.length()
+//
+//            if featureDistanceFromResult < minDistance {
+//                closestFeaturePoint = featurePos
+//                minDistance = featureDistanceFromResult
+//            }
+//        }
+//
+//        // Compute the point along the ray that is closest to the selected feature.
+//        let originToFeature = closestFeaturePoint - origin
+//        let hitTestResult = origin + (direction * direction.dot(originToFeature))
+//        let hitTestResultDistance = (hitTestResult - origin).length()
+//
+//        return FeatureHitTestResult(position: hitTestResult,
+//                                    distanceToRayOrigin: hitTestResultDistance,
+//                                    featureHit: closestFeaturePoint,
+//                                    featureDistanceToHitResult: minDistance)
 	}
     
     /// 去除偏差值大于 3σ 的值
@@ -635,9 +661,33 @@ extension ARSCNView {
         let standard = sqrtf(variance)
         let σ = variance/standard
         points = points.filter { (point) -> Bool in
-            if (point-average).length()*100 > 3*σ {
-                print(point,average)
-            }
+            return (point-average).length()*100 < 3*σ
+        }
+        return points
+    }
+    
+    func fliterWithFeatures(_ features:[vector_float3]) -> [SCNVector3] {
+        guard features.count >= 3 else {
+            return features.map { (feature) -> SCNVector3 in
+                return SCNVector3.init(feature)
+            };
+        }
+        
+        var points = features.map { (feature) -> SCNVector3 in
+            return SCNVector3.init(feature)
+        }
+        // 平均值
+        let average = points.average!
+        // 方差
+        let variance = sqrtf(points.reduce(0) { (sum, point) -> Float in
+            var sum = sum
+            sum += (point-average).length()*100*(point-average).length()*100
+            return sum
+            }/Float(points.count-1))
+        // 标准差
+        let standard = sqrtf(variance)
+        let σ = variance/standard
+        points = points.filter { (point) -> Bool in
             return (point-average).length()*100 < 3*σ
         }
         return points

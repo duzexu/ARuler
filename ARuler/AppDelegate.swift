@@ -16,6 +16,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        AVOSCloud.setApplicationId("h28H91FlwcGb4KhOPOalHMwq-gzGzoHsz", clientKey: "BLzUch4hhXt1rpr1EpD5XtSh")
+        AVOSCloud.setAllLogsEnabled(false)
+        
+        UIBarButtonItem.appearance().setTitleTextAttributes([.foregroundColor:UIColor.clear], for: .normal)
+        UIBarButtonItem.appearance().setTitleTextAttributes([.foregroundColor:UIColor.clear], for: .highlighted)
+        UIBarButtonItem.appearance().tintColor = UIColor.themeColor
+        
         return true
     }
 

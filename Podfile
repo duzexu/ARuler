@@ -6,6 +6,11 @@ target 'ARuler' do
   use_frameworks!
 
   # Pods for ARuler
-pod 'OpenCV'
+pod 'OpenCV', '3.1.0.1'
+pod 'LeanCloudFeedback'
+pod 'R.swift'
+pod 'SnapKit', '~> 4.0.0'
+pod 'PKHUD', :git => 'https://github.com/pkluz/PKHUD.git', :branch => 'release/swift4'
+pod 'AwesomeIntroGuideView'
 
 end
