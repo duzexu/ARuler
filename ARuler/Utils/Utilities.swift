@@ -592,7 +592,7 @@ extension ARSCNView {
 		}
         
         let points = fliterWithFeatures(features.points)
-        guard points.isEmpty else {
+        guard !points.isEmpty else {
             return nil
         }
         let point = points.average
