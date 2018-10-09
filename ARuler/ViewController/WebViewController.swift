@@ -29,7 +29,7 @@ class WebViewController: UIViewController {
         if let url = _url {
             web = SFSafariViewController(url: url)
             web.delegate = self
-            self.addChildViewController(web)
+            self.addChild(web)
             self.view.addSubview(web.view)
             web.view.snp.makeConstraints { (make) in
                 make.edges.equalTo(self.view)

@@ -116,7 +116,7 @@ extension ViewController {
         configuration.planeDetection = .horizontal
         // Run the view's session
         sceneView.session.run(configuration, options: [.resetTracking, .removeExistingAnchors])
-        sceneView.debugOptions = [ARSCNDebugOptions.showFeaturePoints]
+        sceneView.debugOptions = [SCNDebugOptions.showFeaturePoints]
         
         line?.removeFromParent()
         line = nil
@@ -221,7 +221,7 @@ extension ViewController {
             case .excessiveMotion:
                 HUD.flash(.label(tips),delay:0.5)
                 break
-            case .insufficientFeatures,.initializing:
+            case .relocalizing, .insufficientFeatures,.initializing:
                 HUD.show(.label(tips))
                 break
             }
@@ -283,10 +283,10 @@ extension ViewController {
         showDebugVisuals = !showDebugVisuals
         if showDebugVisuals {
             planes.values.forEach { $0.showDebugVisualization(showDebugVisuals) }
-            sceneView.debugOptions = [ARSCNDebugOptions.showFeaturePoints , ARSCNDebugOptions.showWorldOrigin]
+            sceneView.debugOptions = [SCNDebugOptions.showFeaturePoints , SCNDebugOptions.showWorldOrigin]
         }else{
             planes.values.forEach { $0.showDebugVisualization(showDebugVisuals) }
-            sceneView.debugOptions = [ARSCNDebugOptions.showFeaturePoints]
+            sceneView.debugOptions = [SCNDebugOptions.showFeaturePoints]
         }
     }
 }
