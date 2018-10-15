@@ -60,7 +60,7 @@ extension SupportViewController : UITableViewDelegate,UITableViewDataSource {
         switch indexPath.row {
         case 0:
             let url = "itms-apps://itunes.apple.com/app/id1255077231?action=write-review"
-            UIApplication.shared.open(URL(string: url)!, options: [:], completionHandler: nil)
+            UIApplication.shared.open(URL(string: url)!, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]), completionHandler: nil)
             break
         case 1:
             let share = UIActivityViewController(activityItems: [R.image.logo()!,URL(string: "https://itunes.apple.com/us/app/aruler/id1255077231?l=zh&mt=8")!,"我正在使用ARuler测距离，快来试试吧！"], applicationActivities: nil)
@@ -79,3 +79,8 @@ extension SupportViewController : UITableViewDelegate,UITableViewDataSource {
     }
 }
 
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToUIApplicationOpenExternalURLOptionsKeyDictionary(_ input: [String: Any]) -> [UIApplication.OpenExternalURLOptionsKey: Any] {
+	return Dictionary(uniqueKeysWithValues: input.map { key, value in (UIApplication.OpenExternalURLOptionsKey(rawValue: key), value)})
+}

@@ -434,6 +434,8 @@ extension ARCamera.TrackingState {
                 return "特征点过少\n请保证摄像头不被遮挡和环境光线充足"
             case .initializing:
                 return "AR正在初始化\n请左右移动设备获取更多特征点"
+            case .relocalizing:
+                return "relocalizing"
             }
         }
     }
@@ -446,6 +448,15 @@ extension ARError.Code {
             return "很遗憾，您当前的设备不支持"
         case .cameraUnauthorized:
             return "相机开启失败\n请到设置页面打开相机权限"
+        case .microphoneUnauthorized,
+             .invalidReferenceImage,
+             .invalidReferenceObject,
+             .invalidWorldMap,
+             .invalidConfiguration,
+            .insufficientFeatures,
+            .objectMergeFailed,
+                .fileIOFailed:
+            return "error"
         }
     }
 }

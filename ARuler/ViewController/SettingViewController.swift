@@ -22,7 +22,7 @@ class SettingViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.contentInset = UIEdgeInsetsMake(20, 0, 0, 0)
+        tableView.contentInset = UIEdgeInsets.init(top: 20, left: 0, bottom: 0, right: 0)
         sections = ["测量设置","使用帮助","ARuler"]
         values = [["长度单位"],["新手教程","常见问题"],["支持 ARuler","吐槽 ARuler","关于 ARuler"]]
         

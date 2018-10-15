@@ -25,7 +25,7 @@ class DonateViewController: UIViewController {
     @IBAction func donateAction(_ sender: UIButton) {
         if sender.tag == 1 && UIApplication.shared.canOpenURL(URL(string: "alipay://")!) {
             let url = "https://qr.alipay.com/FKX051081LORZHOWMWNHCE"
-            UIApplication.shared.open(URL(string: url)!, options: [:], completionHandler: nil)
+            UIApplication.shared.open(URL(string: url)!, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]), completionHandler: nil)
         }else{
             let image = sender.tag == 0 ? R.image.wxJpg() : R.image.zfbJpg()
             UIImageWriteToSavedPhotosAlbum(image!, self, #selector(imageSaved(image:error:context:)), nil)
@@ -39,4 +39,9 @@ class DonateViewController: UIViewController {
             HUD.flash(.label("保存失败\n请到设置页面打开相册权限"), delay:1.5)
         }
     }
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToUIApplicationOpenExternalURLOptionsKeyDictionary(_ input: [String: Any]) -> [UIApplication.OpenExternalURLOptionsKey: Any] {
+	return Dictionary(uniqueKeysWithValues: input.map { key, value in (UIApplication.OpenExternalURLOptionsKey(rawValue: key), value)})
 }
