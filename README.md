@@ -120,4 +120,5 @@ let crossPoint = planeLineIntersectPoint(planeVector: SCNVector3(detectPlane.x,d
 ## 开源协议
 ARuler开源在 GPL 协议下，详细请查看 [LICENSE](./LICENSE) 文件
 
+[![Powered by DartNode](https://dartnode.com/branding/DN-Open-Source-sm.png)](https://dartnode.com "Powered by DartNode - Free VPS for Open Source")
 
