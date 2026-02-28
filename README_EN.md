@@ -117,3 +117,5 @@ Any suggestion or bug please open an issue.
 ## License
 ARuler is released under the GPL license.See [LICENSE](./LICENSE) for details.
 
+[![Powered by DartNode](https://dartnode.com/branding/DN-Open-Source-sm.png)](https://dartnode.com "Powered by DartNode - Free VPS for Open Source")
+
